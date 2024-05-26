@@ -14,9 +14,9 @@ GameObject:
   - component: {fileID: 2502720414191402889}
   - component: {fileID: 6908447471911104120}
   - component: {fileID: 378420102504782812}
-  - component: {fileID: 8493740286281723863}
+  - component: {fileID: 1663264289255603475}
   m_Layer: 3
-  m_Name: Player
+  m_Name: PlayerClone
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -190,8 +190,8 @@ MonoBehaviour:
     SynchronizeEnabled: 1
     TeleportEnabled: 1
     TeleportIfDistanceGreaterThan: 3
-    InterpolateOption: 1
-    InterpolateMoveTowardsSpeed: 10
+    InterpolateOption: 2
+    InterpolateMoveTowardsSpeed: 1
     InterpolateLerpSpeed: 1
     ExtrapolateOption: 0
     ExtrapolateSpeed: 1
@@ -207,7 +207,7 @@ MonoBehaviour:
     InterpolateOption: 0
     InterpolateMoveTowardsSpeed: 1
     InterpolateLerpSpeed: 0
---- !u!114 &8493740286281723863
+--- !u!114 &1663264289255603475
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -216,6 +216,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 7095490792380391056}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bfa56dc3a798b4832a545b15c1e2168a, type: 3}
+  m_Script: {fileID: 11500000, guid: daa787fce8f474f19ac2868b2d13f1ef, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

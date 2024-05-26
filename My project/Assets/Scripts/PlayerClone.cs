@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
-public class Player : MonoBehaviour {
+public class PlayerClone : MonoBehaviour {
     private Rigidbody2D body;
     private PhotonView view;
     private float moveSpeed;
@@ -22,26 +22,27 @@ public class Player : MonoBehaviour {
             Vector2 movement = Vector2.zero;
 
             //if (Input.GetKey(playerKeyBindManager.moveLeft.getKey())) {
-            if (Input.GetKey(KeyCode.A)) {
+            if (Input.GetKey(KeyCode.LeftArrow)) {
                 movement = Vector2.left * moveSpeed;
             } 
 
             //else if (Input.GetKey(playerKeyBindManager.moveRight.getKey())) {
-            else if (Input.GetKey(KeyCode.D)) {
+            else if (Input.GetKey(KeyCode.RightArrow)) {
                 movement = Vector2.right * moveSpeed;
             }
 
             //else if (Input.GetKey(playerKeyBindManager.moveUp.getKey())) {
-            else if (Input.GetKey(KeyCode.W)) {
+            else if (Input.GetKey(KeyCode.UpArrow)) {
                 movement = Vector2.up * moveSpeed;
             }
 
             //else if (Input.GetKey(playerKeyBindManager.moveDown.getKey())) {
-            else if (Input.GetKey(KeyCode.S)) {
+            else if (Input.GetKey(KeyCode.DownArrow)) {
                 movement = Vector2.down * moveSpeed;
             }
 
-            body.velocity = movement;
+            body.MovePosition(new Vector2(body.position.x + movement.x * Time.deltaTime,
+                    body.position.y + movement.y * Time.deltaTime));
         }
     }
 }
