@@ -3,45 +3,63 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
-public class Player : MonoBehaviour {
-    private Rigidbody2D body;
+public class PlayerMovement : MonoBehaviour
+{
+    public float speed = 5f;
+    public Rigidbody2D rb;
+    public Animator animator;
     private PhotonView view;
-    private float moveSpeed;
-    //private PlayerKeyBindManager playerKeyBindManager = new PlayerKeyBindManager();
 
-    void Start() {
-        body = GetComponent<Rigidbody2D>();
+    Vector2 movement;
+
+    void Start()
+    {
+        rb = GetComponent<Rigidbody2D>();
         view = GetComponent<PhotonView>();
-        moveSpeed = 10F;
-        //playerKeyBindManager.Initialize();
         Physics2D.gravity = Vector2.zero;
     }
 
-    void FixedUpdate() {
-        if(view.IsMine) {
-            Vector2 movement = Vector2.zero;
+    void Update()
+    {
+        if (view.IsMine)
+        {
+            // Reset movement to zero
+            movement = Vector2.zero;
 
-            //if (Input.GetKey(playerKeyBindManager.moveLeft.getKey())) {
-            if (Input.GetKey(KeyCode.A)) {
-                movement = Vector2.left * moveSpeed;
-            } 
-
-            //else if (Input.GetKey(playerKeyBindManager.moveRight.getKey())) {
-            else if (Input.GetKey(KeyCode.D)) {
-                movement = Vector2.right * moveSpeed;
+            // Check for individual key presses to prevent diagonal movement
+            if (Input.GetKey(KeyCode.A))
+            {
+                movement = Vector2.left;
+            }
+            else if (Input.GetKey(KeyCode.D))
+            {
+                movement = Vector2.right;
+            }
+            else if (Input.GetKey(KeyCode.W))
+            {
+                movement = Vector2.up;
+            }
+            else if (Input.GetKey(KeyCode.S))
+            {
+                movement = Vector2.down;
             }
 
-            //else if (Input.GetKey(playerKeyBindManager.moveUp.getKey())) {
-            else if (Input.GetKey(KeyCode.W)) {
-                movement = Vector2.up * moveSpeed;
-            }
+            // Apply speed to the movement vector
+            movement *= speed;
 
-            //else if (Input.GetKey(playerKeyBindManager.moveDown.getKey())) {
-            else if (Input.GetKey(KeyCode.S)) {
-                movement = Vector2.down * moveSpeed;
-            }
+            // Update animator parameters
+            animator.SetFloat("Horizontal", movement.x);
+            animator.SetFloat("Vertical", movement.y);
+            animator.SetFloat("Speed", movement.sqrMagnitude);
+        }
+    }
 
-            body.velocity = movement;
+    void FixedUpdate()
+    {
+        if (view.IsMine)
+        {
+            // Move the player
+            rb.MovePosition(rb.position + movement * Time.fixedDeltaTime);
         }
     }
 }
