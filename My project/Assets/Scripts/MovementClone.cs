@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
-public class Movement : MonoBehaviour
+public class MovementClone : MonoBehaviour
 {
     public float speed = 5f;
     public Rigidbody2D rb;
@@ -30,22 +30,22 @@ public class Movement : MonoBehaviour
             movement = Vector2.zero;
 
             // Check for individual key presses to prevent diagonal movement
-            if (Input.GetKey(KeyCode.A))
+            if (Input.GetKey(KeyCode.LeftArrow))
             {
                 movement = Vector2.left;
                 direction = Direction.LEFT;
             }
-            else if (Input.GetKey(KeyCode.D))
+            else if (Input.GetKey(KeyCode.RightArrow))
             {
                 movement = Vector2.right;
                 direction = Direction.RIGHT;
             }
-            else if (Input.GetKey(KeyCode.W))
+            else if (Input.GetKey(KeyCode.UpArrow))
             {
                 movement = Vector2.up;
                 direction = Direction.UP;
             }
-            else if (Input.GetKey(KeyCode.S))
+            else if (Input.GetKey(KeyCode.DownArrow))
             {
                 movement = Vector2.down;
                 direction = Direction.DOWN;

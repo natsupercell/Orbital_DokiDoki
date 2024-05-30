@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
-public class PlayerMovement : MonoBehaviour
+public class OldPlayer : MonoBehaviour
 {
     public float speed = 5f;
     public Rigidbody2D rb;

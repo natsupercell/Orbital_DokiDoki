@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
-public class PlayerClone : MonoBehaviour {
+public class OldPlayerClone : MonoBehaviour {
     private Rigidbody2D body;
     private PhotonView view;
     private float moveSpeed;
