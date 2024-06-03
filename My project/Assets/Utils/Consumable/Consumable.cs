@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Consumable : Utility {
     // Number of unused charges
-    private int charges;
+    public int charges;
 
     // Instantiating
     public Consumable(string name, int charges) : base(name) {

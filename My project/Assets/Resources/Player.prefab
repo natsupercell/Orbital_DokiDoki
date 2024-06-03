@@ -18,6 +18,8 @@ GameObject:
   - component: {fileID: 9081144579329133321}
   - component: {fileID: 3050888098916047908}
   - component: {fileID: 1861787608009722756}
+  - component: {fileID: 4228114304186668740}
+  - component: {fileID: 5745264532929442945}
   m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
@@ -135,6 +137,7 @@ MonoBehaviour:
   rb: {fileID: 1637019504185415101}
   animator: {fileID: 3379637235748668339}
   view: {fileID: 0}
+  direction: 1
 --- !u!95 &3379637235748668339
 Animator:
   serializedVersion: 5
@@ -286,3 +289,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: clone
   playerPrefab: {fileID: 9038568012795469393, guid: 121c84d1ebd5a410c8b3d35fc0e14a31, type: 3}
+--- !u!114 &4228114304186668740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9038568012795469393}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76e830cdd65234183b603f343fd61a8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: gun
+  bullet: {fileID: 2464522640300633796, guid: 4898e1df47d4448c29e3231f958b4028, type: 3}
+--- !u!114 &5745264532929442945
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9038568012795469393}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9227ca89d5a854958b552f1332497ce7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

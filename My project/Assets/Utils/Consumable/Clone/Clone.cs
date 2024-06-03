@@ -9,9 +9,16 @@ public class Clone : Consumable {
 
     public override void activate(GameObject parent) {
         base.activate(parent);
-        PhotonNetwork.Instantiate(
+        if (PhotonNetwork.IsConnectedAndReady) {
+            PhotonNetwork.Instantiate(
                 playerPrefab.name, 
                 parent.GetComponent<Rigidbody2D>().position + new Vector2(1,1), 
                 Quaternion.identity);
+        } else {
+            Instantiate(
+                playerPrefab, 
+                parent.GetComponent<Rigidbody2D>().position + new Vector2(1,1), 
+                Quaternion.identity);
+        }
     }
 }

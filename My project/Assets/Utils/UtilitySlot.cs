@@ -8,6 +8,7 @@ public class UtilitySlot : MonoBehaviour {
     public KeyCode key;
     public PhotonView view;
     void Start() {
+
         view = GetComponent<PhotonView>();
     }
     

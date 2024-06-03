@@ -10,8 +10,7 @@ public class Movement : MonoBehaviour
     public Rigidbody2D rb;
     public Animator animator;
     public PhotonView view;
-
-    private Direction direction = Direction.RIGHT;
+    public Direction direction = Direction.RIGHT;
     private Vector2 movement;
 
     void Start()
