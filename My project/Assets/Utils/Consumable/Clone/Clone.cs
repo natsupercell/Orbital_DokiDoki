@@ -12,12 +12,12 @@ public class Clone : Consumable {
         if (PhotonNetwork.IsConnectedAndReady) {
             PhotonNetwork.Instantiate(
                 playerPrefab.name, 
-                parent.GetComponent<Rigidbody2D>().position + new Vector2(1,1), 
+                parent.GetComponent<Rigidbody2D>().position, 
                 Quaternion.identity);
         } else {
             Instantiate(
                 playerPrefab, 
-                parent.GetComponent<Rigidbody2D>().position + new Vector2(1,1), 
+                parent.GetComponent<Rigidbody2D>().position, 
                 Quaternion.identity);
         }
     }

@@ -19,6 +19,7 @@ GameObject:
   - component: {fileID: 3050888098916047908}
   - component: {fileID: 1861787608009722756}
   - component: {fileID: 4228114304186668740}
+  - component: {fileID: 6566090184904201109}
   - component: {fileID: 5745264532929442945}
   m_Layer: 3
   m_Name: Player
@@ -216,8 +217,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc6a5e0979fe041f7887e2f7df6b2c26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  utility: {fileID: 1861787608009722756}
-  key: 102
+  utility:
+  - {fileID: 6566090184904201109}
+  - {fileID: 4228114304186668740}
+  - {fileID: 1861787608009722756}
+  key: 660000006700000068000000
   view: {fileID: 0}
 --- !u!114 &9081144579329133321
 MonoBehaviour:
@@ -288,6 +292,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: clone
+  charges: 1
   playerPrefab: {fileID: 9038568012795469393, guid: 121c84d1ebd5a410c8b3d35fc0e14a31, type: 3}
 --- !u!114 &4228114304186668740
 MonoBehaviour:
@@ -302,7 +307,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: gun
-  bullet: {fileID: 2464522640300633796, guid: 4898e1df47d4448c29e3231f958b4028, type: 3}
+  ammoType: {fileID: 0}
+  ammoCount: 2
+  debugScaler: {x: 0, y: 0, z: 0}
+--- !u!114 &6566090184904201109
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9038568012795469393}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0111a0d5bf1374b5cb42ad8e17573df8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: laser
+  ammoType: {fileID: 0}
+  ammoCount: 2
+  debugScaler: {x: 0.27, y: 0.27, z: 0.27}
 --- !u!114 &5745264532929442945
 MonoBehaviour:
   m_ObjectHideFlags: 0
