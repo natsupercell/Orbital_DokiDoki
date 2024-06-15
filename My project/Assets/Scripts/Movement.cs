@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-//using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using Photon.Pun;
 
@@ -10,6 +9,7 @@ public class Movement : MonoBehaviour
     public Rigidbody2D rb;
     public Animator animator;
     public PhotonView view;
+    private ControlAccessSwitch control;
     public Direction direction = Direction.RIGHT;
     private Vector2 movement;
 
@@ -18,12 +18,14 @@ public class Movement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         view = GetComponent<PhotonView>();
+        control = GetComponent<ControlAccessSwitch>();
+        rb.sleepMode = RigidbodySleepMode2D.NeverSleep;
         Physics2D.gravity = Vector2.zero;
     }
 
     void Update()
     {
-        if (view.IsMine)
+        if (view.IsMine && control.enabled)
         {
             // Reset movement to zero
             movement = Vector2.zero;
@@ -49,10 +51,13 @@ public class Movement : MonoBehaviour
                 movement = Vector2.down;
                 direction = Direction.DOWN;
             }
-
-            // Update animations
-            UpdateAnimations();
         }
+        // Update animations
+        UpdateAnimations();
+    }
+
+    public void Stop() {
+        movement = Vector2.zero;
     }
 
     void FixedUpdate()

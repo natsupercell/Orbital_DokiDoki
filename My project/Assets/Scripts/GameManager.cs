@@ -5,6 +5,6 @@ using UnityEngine;
 public class GameManager : MonoBehaviour {
     // Start is called before the first frame update
     void Start() {
-        Physics.IgnoreLayerCollision(3, 3, true);
+        Orb.Initialize();
     }
 }
