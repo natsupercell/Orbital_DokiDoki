@@ -20,6 +20,8 @@ GameObject:
   - component: {fileID: 3050888098916047908}
   - component: {fileID: 5745264532929442945}
   - component: {fileID: 5045214482738500893}
+  - component: {fileID: 6364671985620660553}
+  - component: {fileID: 758930937978235091}
   m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
@@ -263,12 +265,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slot:
-  - utility: {fileID: 0}
+  - weapon: {fileID: 0}
     key: 0
-  - utility: {fileID: 0}
+  - weapon: {fileID: 0}
     key: 0
-  - utility: {fileID: 0}
+  - weapon: {fileID: 0}
     key: 0
+  energy: 0
   activateKey: 102
   deactivateKey: 32
   pickUpKey: 0
@@ -342,6 +345,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9227ca89d5a854958b552f1332497ce7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shielded: 0
 --- !u!114 &5045214482738500893
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -355,6 +359,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enabled: 0
+--- !u!114 &6364671985620660553
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9038568012795469393}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e268d0e6b70eb4682b4b903e06b9af8e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &758930937978235091
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9038568012795469393}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e9ff31bdfe86c45569fe503ff6e3e05f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1131117842145992158
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -16,15 +16,13 @@ public class ObjectPool : MonoBehaviour {
     }
     
     public List<Pool> pools;
-    public Dictionary<string, Pool> mapper;
     public Dictionary<string, Queue<GameObject>> producer;
     public Queue<GameObject> cleaner;
 
     public void Start() {
-        mapper = new Dictionary<string, Pool>();
         producer = new Dictionary<string, Queue<GameObject>>();
+        cleaner = new Queue<GameObject>();
         foreach (Pool pool in pools) {
-            mapper.Add(pool.tag, pool);
             Queue<GameObject> queue = new Queue<GameObject>();
             for (int i = 0; i < pool.size; i++) {
                 GameObject obj = Instantiate(pool.prefab);
@@ -34,8 +32,6 @@ public class ObjectPool : MonoBehaviour {
 
             producer.Add(pool.tag, queue);
         }
-
-        cleaner = new Queue<GameObject>();
     }
 
     public GameObject spawnFromPool(string tag, Vector3 position, Quaternion rotation) {
@@ -44,43 +40,27 @@ public class ObjectPool : MonoBehaviour {
             return null;
         }
 
-        if (producer[tag].Count == 1) {
-            Debug.LogWarning("Pool limit exceeded with tag " + tag);
-            GameObject objectToDuplicate = producer[tag].Dequeue();
-            for (int i = 0; i < 10; i++) {
-                GameObject obj = Instantiate(objectToDuplicate);
-                obj.SetActive(false);
-                producer[tag].Enqueue(obj);
-            }
-        }
-
-        GameObject objectToSpawn = producer[tag].Dequeue();
+        GameObject objectToSpawn = producer[tag].Dequeue(); 
 
         objectToSpawn.SetActive(true);
         objectToSpawn.transform.position = position;
         objectToSpawn.transform.rotation = rotation;
 
+        producer[tag].Enqueue(objectToSpawn);
         cleaner.Enqueue(objectToSpawn);
 
+        // Debug.Log(objectToSpawn);
         return objectToSpawn;
-    }
-
-    public void cleanUp() {
-        while (cleaner.Count != 0) Destroy(cleaner.Dequeue());
-
-        // Refilling pools
-        foreach (string tag in producer.Keys){
-            Pool pool = mapper[tag];
-            Queue<GameObject> queue = producer[tag];
-            for (int i = producer[tag].Count; i < pool.size; i++) {
-                GameObject obj = Instantiate(pool.prefab);
-                obj.SetActive(false);
-                queue.Enqueue(obj);
-            }
-        }
     }
 
     public GameObject spawnFromPool(string tag) { 
         return spawnFromPool(tag, Vector3.zero, Quaternion.identity);
+    }
+
+    public void cleanup() {
+        while (cleaner.Count != 0) {
+            GameObject obj = cleaner.Dequeue();
+            obj.SetActive(false);
+        }
     }
 }

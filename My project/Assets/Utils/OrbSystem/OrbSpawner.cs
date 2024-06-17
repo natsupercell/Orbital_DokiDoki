@@ -13,18 +13,6 @@ public class OrbSpawner : MonoBehaviour {
     public void spawnOrb(string tag) {
         Resource resource = pooler.spawnFromPool(tag).GetComponent<Resource>();
         if (resource != null) {
-            /*
-            if (resource is Weapon) {
-                Debug.Log("weapon");
-                Weapon weapon = (Weapon) resource;
-                Orb.create(weapon, transform);
-            }
-            else if (resource is Energy){
-                Debug.Log("energy");
-                Energy energy = (Energy) resource;
-                Orb.create(energy, transform);
-            } 
-            */
             Orb.create(resource, transform);
         }
         else Debug.LogWarning("bug");

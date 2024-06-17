@@ -10,7 +10,7 @@ public class LaserBeam : MonoBehaviour {
     public LayerMask hitLayers; // Layers to include in raycasting
 
     private void Start() {
-        hitLayers = LayerMask.GetMask("Player", "Terrain");
+        hitLayers = LayerMask.GetMask("Enemy", "Terrain");
         lineRenderer = GetComponent<LineRenderer>();
         lineRenderer.useWorldSpace = true;
         // lineRenderer.enabled = false;
