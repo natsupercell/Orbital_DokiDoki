@@ -10,11 +10,17 @@ public class Utility : MonoBehaviour, Resource {
      * (Side note) Reusable.empty is always false 
      */
     private bool empty;
+    /*
+     * Cost of using this weapon
+     * (Side note) NonWeapon.cost is always 0 
+     */
+    public int cost;
 
     // Instantiating
     public Utility(string name) {
         this.name = name;
         empty = false;
+        cost = 0;
     }
 
     // ranOut() change an utility's state to empty

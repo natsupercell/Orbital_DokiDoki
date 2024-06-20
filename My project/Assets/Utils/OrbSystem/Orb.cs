@@ -10,6 +10,11 @@ public class Orb : MonoBehaviour {
         prefab = Resources.Load<GameObject>("Orb/Orb");
     }
 
+    public void Awake() {
+        Rigidbody2D rb = GetComponent<Rigidbody2D>();
+        rb.sleepMode = RigidbodySleepMode2D.NeverSleep;
+    }
+
     public static void create(Resource resource, Transform transform) {
         if (resource != null) {
             GameObject newOrb = Instantiate(prefab, transform.position + new Vector3(0f,0f,-10f), Quaternion.identity);
@@ -20,7 +25,9 @@ public class Orb : MonoBehaviour {
     }
 
     public Resource extract(){
-        Destroy(gameObject);
-        return content;
+        gameObject.SetActive(false);
+        Resource output = content;
+        content = null;
+        return output;
     }
 }

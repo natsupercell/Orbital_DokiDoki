@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TargetedSpellWithDelay : TargetedSpell {
+public class SpellWithDelay : Spell {
     public float delay = 0.5f;
-    public TargetedSpellWithDelay(string name) : base(name) {}
+    public SpellWithDelay(string name) : base(name) {}
     public override void activate(GameObject parent) {
         if (state == State.None) {
             aiming(parent);

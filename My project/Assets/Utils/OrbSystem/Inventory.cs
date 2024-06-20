@@ -5,49 +5,54 @@ using Photon.Pun;
 
 public class Inventory : MonoBehaviour {
     [System.Serializable]
-    public class WeaponSlot {
-        public Weapon weapon;
+    public class Slot {
+        public Utility util;
         public KeyCode key;
 
         public bool isEmpty() {
-            return (weapon == null);
-        }
-
-        public void pickUp(Weapon weapon, GameObject obj) {
-            if (!isEmpty()) {
-                drop(obj);
-            }
-            this.weapon = weapon;
-            Debug.Log("Picked up " + weapon.name);
-        }
-
-        public void drop(GameObject obj) {
-            if (!isEmpty()) {
-                Orb.create(weapon, obj.transform);
-                Debug.Log("Dropped " + weapon.name);
-                weapon = null;
-            } else Debug.Log("Can't drop, slot is empty");
+            return (util == null);
         }
 
         public void activate(GameObject obj) {
             if (!isEmpty()) {
-                weapon.activate(obj);
-                if (weapon.destroy()) {
-                    Destroy(weapon);
-                    // weapon = null;
+                util.activate(obj);
+                if (util.destroy()) {
+                    Destroy(util);
                 }
             }
         }
-        
+
         public void deactivate(GameObject obj) {
             if (!isEmpty()) {
-                weapon.deactivate(obj);
+                util.deactivate(obj);
             }
+        }
+
+        public virtual void pickUp(Weapon weapon, GameObject obj) {}
+        public virtual void drop(GameObject obj) {}
+    }
+    public class WeaponSlot : Slot {
+        public override void pickUp(Weapon weapon, GameObject obj) {
+            if (!isEmpty()) {
+                drop(obj);
+            }
+            this.util = weapon;
+            Debug.Log("Picked up " + weapon.name);
+        }
+
+        public override void drop(GameObject obj) {
+            if (!isEmpty()) {
+                Orb.create(util, obj.transform);
+                Debug.Log("Dropped " + util.name);
+                util = null;
+            } else Debug.Log("Can't drop, slot is empty");
         }
     }
 
+    public class SpellSlot : Slot {}
+
     [SerializeField]
-    public WeaponSlot[] slot = new WeaponSlot[2];
+    public Slot[] slot; 
     public int energy;
     private int currentSlot;
     public KeyCode activateKey;
@@ -59,11 +64,19 @@ public class Inventory : MonoBehaviour {
 
     private bool pickingUp;
 
-    private void Start() {
+    void Awake() {
         view = GetComponent<PhotonView>();
         control = GetComponent<ControlAccessSwitch>();
         currentSlot = 0;
         energy = 10;
+        /*
+        slot[0] = new WeaponSlot();
+        slot[0].key = KeyCode.Alpha1;
+        slot[1] = new WeaponSlot();
+        slot[1].key = KeyCode.Alpha2;
+        slot[2] = new SpellSlot();
+        slot[2].key = KeyCode.Alpha3;
+        */
     }
     
     private void Update() {
@@ -72,7 +85,7 @@ public class Inventory : MonoBehaviour {
                 for (int i = 0; i < 3; i++) if (Input.GetKeyDown(slot[i].key)) {
                     currentSlot = i;
                     Debug.Log("Switched to slot number " + (i + 1) + ", holding " 
-                    + (slot[i].isEmpty() ? "nothing" : slot[i].weapon.name));
+                    + (slot[i].isEmpty() ? "nothing" : slot[i].util.name));
                 }
                 if (Input.GetKeyDown(dropKey)) {
                     slot[currentSlot].drop(gameObject);
@@ -81,10 +94,13 @@ public class Inventory : MonoBehaviour {
                     pickingUp = true;
                 } else {
                     pickingUp = false;
-                }
+                } 
             }
             if (Input.GetKeyDown(activateKey)) {
-                if (!slot[currentSlot].isEmpty() && spendEnergy(slot[currentSlot].weapon.cost)) slot[currentSlot].activate(gameObject);
+                if (!slot[currentSlot].isEmpty())
+                    if(!isWeapon() || spendEnergy(slot[currentSlot].util.cost)) {
+                        slot[currentSlot].activate(gameObject);
+                }
                 else Debug.Log("Weapon missing!");
             } 
             if (Input.GetKeyDown(deactivateKey)) slot[currentSlot].deactivate(gameObject);
@@ -101,21 +117,29 @@ public class Inventory : MonoBehaviour {
             Resource resource = orb.extract();
             if (resource is Weapon) pickUpWeapon((Weapon) resource);
             else if (resource is Energy) rechargeEnergy((Energy) resource);
+
         }
     }
 
     private void pickUpWeapon(Weapon weapon) {
         if (weapon != null) {
-            if (slot[currentSlot].isEmpty()) {
-                slot[currentSlot].pickUp(weapon, gameObject);
-            } else if (slot[0].isEmpty()) {
-                slot[0].pickUp(weapon, gameObject);
-            } else if (slot[1].isEmpty()) {
-                slot[1].pickUp(weapon, gameObject);
-            } else {
-                slot[currentSlot].pickUp(weapon, gameObject);
-            } 
+            if (isWeapon()) {
+                if (slot[currentSlot].isEmpty()) {
+                    slot[currentSlot].pickUp(weapon, gameObject);
+                } else if (slot[0].isEmpty()) {
+                    slot[0].pickUp(weapon, gameObject);
+                } else if (slot[1].isEmpty()) {
+                    slot[1].pickUp(weapon, gameObject);
+                } else {
+                    slot[currentSlot].pickUp(weapon, gameObject);
+                } 
+            }
+            else slot[0].pickUp(weapon, gameObject);
         }
+    }
+
+    private bool isWeapon() {
+        return currentSlot < 2;
     }
 
     private void rechargeEnergy(Energy energy) {

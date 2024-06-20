@@ -2,11 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TargetedSpell : Utility {
+public class Spell : Utility {
     public GameObject spellType;  // The prefab of the spell to cast
     public GameObject crosshair;  // A visual indicator for the target location
 
-    public TargetedSpell(string name) : base(name) {}
+    public Spell(string name) : base(name) {}
 
     protected enum State {
         None,

@@ -12,7 +12,7 @@ public class GameManager : MonoBehaviour {
     public Vector3 allyDefaultPosition;
     public Vector3 enemyDefaultPosition;
     
-    public ObjectPool pooler;
+    //public ObjectPool pooler;
     void Awake() {
         Orb.Initialize();
 
@@ -22,10 +22,10 @@ public class GameManager : MonoBehaviour {
         allyScore = enemyScore = 0;
         scoreToWin = 8;
 
-        allyDefaultPosition = new Vector3(-4.25f,-3.75f,0f);
-        enemyDefaultPosition = new Vector3(4.25f,3.75f,0f);
+        allyDefaultPosition = new Vector3(-4.25f,-3.75f,10f);
+        enemyDefaultPosition = new Vector3(4.25f,3.75f,10f);
 
-        pooler = GameObject.FindGameObjectsWithTag("Pooler")[0].GetComponent<ObjectPool>();
+        //pooler = GameObject.FindGameObjectsWithTag("Pooler")[0].GetComponent<ObjectPool>();
     }
 
     void Update() {
@@ -50,7 +50,14 @@ public class GameManager : MonoBehaviour {
             p.GetComponent<Resetter>().reset();
             p.transform.position = enemyDefaultPosition;
         }
-        pooler.cleanup();
+        cleanup();
+        //pooler.cleanup();
+    }
+
+    void cleanup() {
+        foreach (GameObject p in GameObject.FindGameObjectsWithTag("Orb")) {
+            Destroy(p);
+        }
     }
 
     void GameOver() {

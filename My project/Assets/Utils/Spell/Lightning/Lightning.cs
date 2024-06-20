@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Lightning : TargetedSpell {
+public class Lightning : Spell {
     private GameObject bolt;
     public Lightning() : base("lightning") {}
 

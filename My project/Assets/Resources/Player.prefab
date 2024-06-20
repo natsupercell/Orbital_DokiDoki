@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 4805651091136378056}
   - component: {fileID: 3568997573871541458}
   - component: {fileID: 1637019504185415101}
-  - component: {fileID: 6275391506053917800}
-  - component: {fileID: 3379637235748668339}
   - component: {fileID: 437114195625249162}
   - component: {fileID: -5553446958317013822}
+  - component: {fileID: 3379637235748668339}
+  - component: {fileID: 6275391506053917800}
   - component: {fileID: 1456727525586717160}
   - component: {fileID: 9081144579329133321}
   - component: {fileID: 3050888098916047908}
@@ -38,7 +38,7 @@ Transform:
   m_GameObject: {fileID: 9038568012795469393}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.6276925, y: 0.39876282, z: 0}
+  m_LocalPosition: {x: -3.6276925, y: 0.39876282, z: 10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -124,44 +124,6 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 1
   m_Constraints: 4
---- !u!114 &6275391506053917800
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9038568012795469393}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5b15ba7e5f42c6d489618df39b3b4f35, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 5
-  rb: {fileID: 1637019504185415101}
-  animator: {fileID: 3379637235748668339}
-  view: {fileID: 0}
-  direction: 1
---- !u!95 &3379637235748668339
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9038568012795469393}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 3c0ff6b38dc014855b17241bba4212ea, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!61 &437114195625249162
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -252,6 +214,44 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.48, y: 0.52}
   m_EdgeRadius: 0
+--- !u!95 &3379637235748668339
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9038568012795469393}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 3c0ff6b38dc014855b17241bba4212ea, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &6275391506053917800
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9038568012795469393}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b15ba7e5f42c6d489618df39b3b4f35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 5
+  rb: {fileID: 1637019504185415101}
+  animator: {fileID: 3379637235748668339}
+  view: {fileID: 0}
+  direction: 1
 --- !u!114 &1456727525586717160
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -265,12 +265,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   slot:
-  - weapon: {fileID: 0}
-    key: 0
-  - weapon: {fileID: 0}
-    key: 0
-  - weapon: {fileID: 0}
-    key: 0
+  - util: {fileID: 0}
+    key: 49
+  - util: {fileID: 0}
+    key: 50
+  - util: {fileID: 0}
+    key: 51
   energy: 0
   activateKey: 102
   deactivateKey: 32
@@ -371,6 +371,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e268d0e6b70eb4682b4b903e06b9af8e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  status: 0
 --- !u!114 &758930937978235091
 MonoBehaviour:
   m_ObjectHideFlags: 0

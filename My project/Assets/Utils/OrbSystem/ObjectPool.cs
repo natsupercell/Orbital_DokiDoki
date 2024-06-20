@@ -17,11 +17,11 @@ public class ObjectPool : MonoBehaviour {
     
     public List<Pool> pools;
     public Dictionary<string, Queue<GameObject>> producer;
-    public Queue<GameObject> cleaner;
+    //public Queue<GameObject> cleaner;
 
     public void Start() {
         producer = new Dictionary<string, Queue<GameObject>>();
-        cleaner = new Queue<GameObject>();
+        //cleaner = new Queue<GameObject>();
         foreach (Pool pool in pools) {
             Queue<GameObject> queue = new Queue<GameObject>();
             for (int i = 0; i < pool.size; i++) {
@@ -47,7 +47,7 @@ public class ObjectPool : MonoBehaviour {
         objectToSpawn.transform.rotation = rotation;
 
         producer[tag].Enqueue(objectToSpawn);
-        cleaner.Enqueue(objectToSpawn);
+        //cleaner.Enqueue(objectToSpawn);
 
         // Debug.Log(objectToSpawn);
         return objectToSpawn;
@@ -57,10 +57,12 @@ public class ObjectPool : MonoBehaviour {
         return spawnFromPool(tag, Vector3.zero, Quaternion.identity);
     }
 
+    /*
     public void cleanup() {
         while (cleaner.Count != 0) {
             GameObject obj = cleaner.Dequeue();
             obj.SetActive(false);
         }
     }
+    */
 }

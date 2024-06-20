@@ -5,7 +5,6 @@ using UnityEngine;
 public class Weapon : Utility {
     // Ammo's type and number of rounds available
     public GameObject ammoType;
-    public int cost;
 
     // Instantiating methods
     public Weapon(string name, int cost) : base(name) {
