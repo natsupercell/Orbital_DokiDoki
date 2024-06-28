@@ -8,6 +8,7 @@ TagManager:
   - Enemy
   - Pooler
   - Orb
+  - Audio
   layers:
   - Default
   - TransparentFX

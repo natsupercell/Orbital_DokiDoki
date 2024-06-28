@@ -261,19 +261,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 9038568012795469393}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dc6a5e0979fe041f7887e2f7df6b2c26, type: 3}
+  m_Script: {fileID: 11500000, guid: 9c7d678af26112741900b4752bc868a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slot:
-  - util: {fileID: 0}
-    key: 49
-  - util: {fileID: 0}
-    key: 50
-  - util: {fileID: 0}
-    key: 51
+  slot: []
   energy: 0
-  activateKey: 102
-  deactivateKey: 32
+  activateKey: 0
+  deactivateKey: 0
   pickUpKey: 0
   dropKey: 0
   view: {fileID: 0}

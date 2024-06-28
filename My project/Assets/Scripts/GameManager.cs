@@ -63,6 +63,6 @@ public class GameManager : MonoBehaviour {
     void GameOver() {
         // TODO: Message indicating winning team should appear on screen
         Debug.Log("Game over");
-        SceneManager.LoadScene("Loading");
+        SceneManager.LoadScene("MainMenu");
     }
 }

@@ -44,12 +44,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 2464522640300633796}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 212acdaf036914651b95a5b8cf1f391d, type: 3}
+  m_Script: {fileID: 11500000, guid: c4701c5e804aec34b95e9a4a243a01ec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 20
   damage: 1
-  rb: {fileID: 3540306746283801941}
+  rb: {fileID: 0}
 --- !u!50 &3540306746283801941
 Rigidbody2D:
   serializedVersion: 4

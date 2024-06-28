@@ -5,6 +5,7 @@ using UnityEngine;
 public class Weapon : Utility {
     // Ammo's type and number of rounds available
     public GameObject ammoType;
+    protected AudioManager audioManager;
 
     // Instantiating methods
     public Weapon(string name, int cost) : base(name) {
@@ -12,10 +13,11 @@ public class Weapon : Utility {
     }
 
     public Weapon(string name) : this(name, 1) {}
-
-    // Activating, reducing number of ammo by 1
-    public override void activate(GameObject parent) {
+    public override void activate(GameObject parent)
+    {
         Direction direction = parent.GetComponent<Movement>().direction;
         Instantiate(ammoType, parent.transform.position, direction.toQuaternion());
+        audioManager.PlaySFX(audioManager.shooting);
     }
+
 }

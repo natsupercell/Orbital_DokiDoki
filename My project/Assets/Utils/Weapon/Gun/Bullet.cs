@@ -6,9 +6,11 @@ public class Bullet : MonoBehaviour {
     public float speed = 20f;
     public int damage = 1;
     public Rigidbody2D rb;
-    
+    public LayerMask hitLayers;
+
     // Start is called before the first frame update
     void Start() {
+        hitLayers = LayerMask.GetMask("Enemy", "Terrain");
         rb = GetComponent<Rigidbody2D>();
         rb.velocity = transform.right * speed;
     }

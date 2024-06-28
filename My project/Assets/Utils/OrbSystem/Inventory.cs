@@ -69,14 +69,9 @@ public class Inventory : MonoBehaviour {
         control = GetComponent<ControlAccessSwitch>();
         currentSlot = 0;
         energy = 10;
-        /*
         slot[0] = new WeaponSlot();
-        slot[0].key = KeyCode.Alpha1;
         slot[1] = new WeaponSlot();
-        slot[1].key = KeyCode.Alpha2;
         slot[2] = new SpellSlot();
-        slot[2].key = KeyCode.Alpha3;
-        */
     }
     
     private void Update() {
@@ -115,8 +110,16 @@ public class Inventory : MonoBehaviour {
                 return;
             }
             Resource resource = orb.extract();
-            if (resource is Weapon) pickUpWeapon((Weapon) resource);
-            else if (resource is Energy) rechargeEnergy((Energy) resource);
+            if (resource is Weapon)
+            {
+                pickUpWeapon((Weapon)resource);
+                Debug.Log("weapon");
+            }
+            else if (resource is Energy) rechargeEnergy((Energy)resource);
+            else
+            {
+                Debug.Log("wtf");
+            }
 
         }
     }
@@ -132,9 +135,13 @@ public class Inventory : MonoBehaviour {
                     slot[1].pickUp(weapon, gameObject);
                 } else {
                     slot[currentSlot].pickUp(weapon, gameObject);
-                } 
+                }
             }
             else slot[0].pickUp(weapon, gameObject);
+        }
+        else
+        {
+            Debug.Log("wtf");
         }
     }
 

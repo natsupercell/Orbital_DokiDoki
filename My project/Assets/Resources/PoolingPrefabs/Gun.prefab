@@ -41,9 +41,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 4425643445590116560}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76e830cdd65234183b603f343fd61a8d, type: 3}
+  m_Script: {fileID: 11500000, guid: 3a72f16b4431d1d4b9888e8283d9549d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   name: gun
+  cost: 1
   ammoType: {fileID: 0}
-  cost: 2

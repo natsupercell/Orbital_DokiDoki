@@ -24,7 +24,7 @@ public class Orb : MonoBehaviour {
         }
     }
 
-    public Resource extract(){
+    public Resource extract() {
         gameObject.SetActive(false);
         Resource output = content;
         content = null;
