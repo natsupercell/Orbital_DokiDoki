@@ -12,6 +12,8 @@ public class Movement : MonoBehaviour
     private ControlAccessSwitch control;
     public Direction direction = Direction.RIGHT;
     private Vector2 movement;
+    [SerializeField]
+    public KeyCode[] moveKeys = new KeyCode[4];
 
     void Start()
     {
@@ -23,7 +25,7 @@ public class Movement : MonoBehaviour
         Physics2D.gravity = Vector2.zero;
     }
 
-    void Update()
+    public virtual void Update()
     {
         if (view.IsMine && control.enabled)
         {
@@ -31,22 +33,22 @@ public class Movement : MonoBehaviour
             movement = Vector2.zero;
 
             // Check for individual key presses to prevent diagonal movement
-            if (Input.GetKey(KeyCode.A))
+            if (Input.GetKey(moveKeys[0]))
             {
                 movement = Vector2.left;
                 direction = Direction.LEFT;
             }
-            else if (Input.GetKey(KeyCode.D))
+            else if (Input.GetKey(moveKeys[1]))
             {
                 movement = Vector2.right;
                 direction = Direction.RIGHT;
             }
-            else if (Input.GetKey(KeyCode.W))
+            else if (Input.GetKey(moveKeys[2]))
             {
                 movement = Vector2.up;
                 direction = Direction.UP;
             }
-            else if (Input.GetKey(KeyCode.S))
+            else if (Input.GetKey(moveKeys[3]))
             {
                 movement = Vector2.down;
                 direction = Direction.DOWN;

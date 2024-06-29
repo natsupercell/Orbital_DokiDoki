@@ -14,13 +14,16 @@ public class GameManager : MonoBehaviour {
     
     //public ObjectPool pooler;
     void Awake() {
+        Physics2D.IgnoreLayerCollision(8, 10, true);
+        Physics2D.IgnoreLayerCollision(9, 11, true);
+
         Orb.Initialize();
 
         allies.AddRange(GameObject.FindGameObjectsWithTag("Ally"));
         enemies.AddRange(GameObject.FindGameObjectsWithTag("Enemy"));
 
         allyScore = enemyScore = 0;
-        scoreToWin = 8;
+        scoreToWin = 3;
 
         allyDefaultPosition = new Vector3(-4.25f,-3.75f,10f);
         enemyDefaultPosition = new Vector3(4.25f,3.75f,10f);

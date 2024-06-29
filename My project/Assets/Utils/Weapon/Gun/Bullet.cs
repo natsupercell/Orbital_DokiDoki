@@ -2,17 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour {
+public class Bullet : MonoBehaviour, AmmoType {
     public float speed = 20f;
     public int damage = 1;
     public Rigidbody2D rb;
-    public LayerMask hitLayers;
 
     // Start is called before the first frame update
     void Start() {
-        hitLayers = LayerMask.GetMask("Enemy", "Terrain");
         rb = GetComponent<Rigidbody2D>();
         rb.velocity = transform.right * speed;
+    }
+
+    public void excludeLayer(int layer) {
+        gameObject.layer = Team.toLayerToBeIgnored(layer);
     }
 
     void Update() {
@@ -24,12 +26,15 @@ public class Bullet : MonoBehaviour {
 
     // Update is called once per frame
     void OnTriggerEnter2D(Collider2D hitInfo) {
-        Debug.Log("hit " + hitInfo.ToString());
-        // Implement logic for when the laser hits something
-        Hitbox hitbox = hitInfo.GetComponent<Hitbox>();
-        if (hitbox != null) {
-            hitbox.takeDamage();
+        Team team = hitInfo.GetComponent<Team>();
+        if (team is Enemy) {
+            Debug.Log("hit " + hitInfo.ToString());
+            // Implement logic for when the laser hits something
+            Hitbox hitbox = hitInfo.GetComponent<Hitbox>();
+            if (hitbox != null) {
+                hitbox.takeDamage();
+            }
+            Destroy(gameObject);
         }
-        Destroy(gameObject);
     }
 }

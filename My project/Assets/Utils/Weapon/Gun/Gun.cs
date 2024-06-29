@@ -2,14 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Gun : Weapon
-{
-    public Gun() : base("gun", 1) { }
+public class Gun : Weapon {
+    public Gun() : base("gun", 1) {}
 
-    private void Awake()
-    {
+    public override void Awake() {      
+        base.Awake();
         string prefabPath = "Bullet";
         ammoType = Resources.Load<GameObject>(prefabPath);
-        audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
+        audio = audioManager.shooting;
     }
 }

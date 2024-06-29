@@ -9,6 +9,10 @@ public class Inventory : MonoBehaviour {
         public Utility util;
         public KeyCode key;
 
+        public Slot(KeyCode key) {
+            this.key = key;
+        }
+
         public bool isEmpty() {
             return (util == null);
         }
@@ -32,6 +36,7 @@ public class Inventory : MonoBehaviour {
         public virtual void drop(GameObject obj) {}
     }
     public class WeaponSlot : Slot {
+        public WeaponSlot(KeyCode key) : base(key) {}
         public override void pickUp(Weapon weapon, GameObject obj) {
             if (!isEmpty()) {
                 drop(obj);
@@ -49,7 +54,9 @@ public class Inventory : MonoBehaviour {
         }
     }
 
-    public class SpellSlot : Slot {}
+    public class SpellSlot : Slot {
+        public SpellSlot(KeyCode key) : base(key) {}
+    }
 
     [SerializeField]
     public Slot[] slot; 
@@ -69,9 +76,9 @@ public class Inventory : MonoBehaviour {
         control = GetComponent<ControlAccessSwitch>();
         currentSlot = 0;
         energy = 10;
-        slot[0] = new WeaponSlot();
-        slot[1] = new WeaponSlot();
-        slot[2] = new SpellSlot();
+        slot[0] = new WeaponSlot(KeyCode.Alpha1);
+        slot[1] = new WeaponSlot(KeyCode.Alpha2);
+        slot[2] = new SpellSlot(KeyCode.Alpha3);
     }
     
     private void Update() {
@@ -110,17 +117,8 @@ public class Inventory : MonoBehaviour {
                 return;
             }
             Resource resource = orb.extract();
-            if (resource is Weapon)
-            {
-                pickUpWeapon((Weapon)resource);
-                Debug.Log("weapon");
-            }
+            if (resource is Weapon) pickUpWeapon((Weapon)resource);
             else if (resource is Energy) rechargeEnergy((Energy)resource);
-            else
-            {
-                Debug.Log("wtf");
-            }
-
         }
     }
 
@@ -138,10 +136,6 @@ public class Inventory : MonoBehaviour {
                 }
             }
             else slot[0].pickUp(weapon, gameObject);
-        }
-        else
-        {
-            Debug.Log("wtf");
         }
     }
 

@@ -6,7 +6,7 @@ public class OrbSpawner : MonoBehaviour {
     public KeyCode[] key;
     public ObjectPool pooler;
 
-    /* For debugging */ public float INCREMENT = 0.01f; public int SCALE = 0; 
+    /* For debugging */ public float INCREMENT = 0.1f; public int SCALE = 0; 
 
     public void Awake() {
         this.pooler = GetComponent<ObjectPool>();
@@ -18,7 +18,7 @@ public class OrbSpawner : MonoBehaviour {
 
         // Instantiating the orb
         if (resource != null) {
-            orb.transform.position = transform.position + new Vector3(INCREMENT * SCALE,0f,-10f); SCALE++;
+            orb.transform.position = transform.position + new Vector3(INCREMENT * (SCALE % 2),0f,-10f); SCALE++;
             orb.GetComponent<Orb>().content = resource;
 
             Debug.Log("Created a new " + resource + " orb");
