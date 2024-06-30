@@ -9,7 +9,7 @@ public class Ally : MonoBehaviour, Team {
 
     public void Start() {
         alive();
-        // Debug.Log("New ally");
+        //Debug.Log("New ally");
     }
 
     public void alive() {
@@ -28,5 +28,9 @@ public class Ally : MonoBehaviour, Team {
 
     public static bool isEliminated() {
         return count == 0;
+    }
+
+    public static void reset() {
+        count = 0;
     }
 }

@@ -14,7 +14,7 @@ public class Inventory : MonoBehaviour {
         }
 
         public bool isEmpty() {
-            return (util == null);
+            return util == null;
         }
 
         public void activate(GameObject obj) {
@@ -58,8 +58,9 @@ public class Inventory : MonoBehaviour {
         public SpellSlot(KeyCode key) : base(key) {}
     }
 
+    private Slot[] slot = new Slot[3]; 
     [SerializeField]
-    public Slot[] slot; 
+    public KeyCode[] key = new KeyCode[3];
     public int energy;
     private int currentSlot;
     public KeyCode activateKey;
@@ -70,23 +71,24 @@ public class Inventory : MonoBehaviour {
     private ControlAccessSwitch control;
 
     private bool pickingUp;
-
+    private bool pickUpAble = true;
+    public static float delay = 0.3f;
     void Awake() {
         view = GetComponent<PhotonView>();
         control = GetComponent<ControlAccessSwitch>();
         currentSlot = 0;
         energy = 10;
-        slot[0] = new WeaponSlot(KeyCode.Alpha1);
-        slot[1] = new WeaponSlot(KeyCode.Alpha2);
-        slot[2] = new SpellSlot(KeyCode.Alpha3);
+        slot[0] = new WeaponSlot(key[0]);
+        slot[1] = new WeaponSlot(key[1]);
+        slot[2] = new SpellSlot(key[2]);
     }
     
     private void Update() {
-        if (view.IsMine) {  
+        //if (view.IsMine) {  
             if (control.enabled) {
                 for (int i = 0; i < 3; i++) if (Input.GetKeyDown(slot[i].key)) {
                     currentSlot = i;
-                    Debug.Log("Switched to slot number " + (i + 1) + ", holding " 
+                    Debug.Log("Switched to slot number " + (i + 1) + ", holding "
                     + (slot[i].isEmpty() ? "nothing" : slot[i].util.name));
                 }
                 if (Input.GetKeyDown(dropKey)) {
@@ -106,23 +108,23 @@ public class Inventory : MonoBehaviour {
                 else Debug.Log("Weapon missing!");
             } 
             if (Input.GetKeyDown(deactivateKey)) slot[currentSlot].deactivate(gameObject);
-        }
+        //}
     }
 
     public void OnTriggerStay2D(Collider2D box) {
-        if (pickingUp) {
+        if (pickingUp && pickUpAble) {
             Orb orb = box.GetComponent<Orb>();
             if (orb == null) {
                 Debug.LogWarning("Invalid object, cannot pick up");
                 return;
             }
             Resource resource = orb.extract();
-            if (resource is Weapon) pickUpWeapon((Weapon)resource);
-            else if (resource is Energy) rechargeEnergy((Energy)resource);
+            if (resource is Weapon) StartCoroutine(pickUpWeapon((Weapon)resource));
+            else if (resource is Energy) StartCoroutine(rechargeEnergy((Energy)resource));
         }
     }
 
-    private void pickUpWeapon(Weapon weapon) {
+    private IEnumerator pickUpWeapon(Weapon weapon) {
         if (weapon != null) {
             if (isWeapon()) {
                 if (slot[currentSlot].isEmpty()) {
@@ -136,6 +138,10 @@ public class Inventory : MonoBehaviour {
                 }
             }
             else slot[0].pickUp(weapon, gameObject);
+
+            pickUpAble = false;
+            yield return new WaitForSeconds(delay);
+            pickUpAble = true;
         }
     }
 
@@ -143,9 +149,13 @@ public class Inventory : MonoBehaviour {
         return currentSlot < 2;
     }
 
-    private void rechargeEnergy(Energy energy) {
+    private IEnumerator rechargeEnergy(Energy energy) {
         if (energy != null) {
             this.energy += energy.getValue();
+
+            pickUpAble = false;
+            yield return new WaitForSeconds(delay);
+            pickUpAble = true;
         }
     }
 

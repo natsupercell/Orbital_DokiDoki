@@ -29,4 +29,8 @@ public class Enemy : MonoBehaviour, Team {
     public static bool isEliminated() {
         return count == 0;
     }
+
+    public static void reset() {
+        count = 0;
+    }
 }

@@ -27,7 +27,7 @@ public class Movement : MonoBehaviour
 
     public virtual void Update()
     {
-        if (view.IsMine && control.enabled)
+        if (control.enabled)
         {
             // Reset movement to zero
             movement = Vector2.zero;

@@ -6,6 +6,11 @@ public class ControlAccessSwitch : MonoBehaviour {
     public new bool enabled;
 
     private void Start() {
-        enabled = true;
+        enabled = false;
+    }
+
+    public void disable() {
+        enabled = false;
+        GetComponent<Movement>().Stop();
     }
 }

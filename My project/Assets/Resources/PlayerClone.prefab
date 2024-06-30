@@ -247,7 +247,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5b15ba7e5f42c6d489618df39b3b4f35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
+  speed: 2
   rb: {fileID: 0}
   animator: {fileID: 0}
   view: {fileID: 0}
@@ -267,11 +267,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slot:
   - util: {fileID: 0}
-    key: 56
+    key: 0
   - util: {fileID: 0}
-    key: 57
+    key: 0
   - util: {fileID: 0}
-    key: 48
+    key: 0
+  key: 000000000000000000000000
   energy: 10
   activateKey: 106
   deactivateKey: 108
@@ -359,7 +360,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e406d249a28dc43c09f7c17d2feab2d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enabled: 0
+  enabled: 1
 --- !u!114 &3315862802150180417
 MonoBehaviour:
   m_ObjectHideFlags: 0

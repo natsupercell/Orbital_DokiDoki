@@ -34,7 +34,7 @@ public class Bullet : MonoBehaviour, AmmoType {
             if (hitbox != null) {
                 hitbox.takeDamage();
             }
-            Destroy(gameObject);
         }
+        Destroy(gameObject);
     }
 }
