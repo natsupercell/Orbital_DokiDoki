@@ -33,7 +33,7 @@ public class GameManager : MonoBehaviour {
         scoreToWin = 3;
 
         allyDefaultPosition = new Vector3(-4.25f,-3.75f,10f);
-        enemyDefaultPosition = new Vector3(4.25f,3.75f,10f);
+        enemyDefaultPosition = new Vector3(3.75f,3.75f,10f);
 
         Instantiate(allyPrefab, allyDefaultPosition, Quaternion.identity);
         Instantiate(enemyPrefab, enemyDefaultPosition, Quaternion.identity);
