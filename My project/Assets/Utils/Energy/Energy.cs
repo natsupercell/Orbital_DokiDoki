@@ -11,6 +11,10 @@ public class Energy : MonoBehaviour, Resource {
 
     public Energy() : this(2) {}
 
+    public string getName() {
+        return "energy";
+    }
+
     public int getValue() {
         Destroy(this);
         return value;

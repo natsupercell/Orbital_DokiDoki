@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Photon.Pun;
 
 public class GameManager : MonoBehaviour {
     public List<GameObject> allies;
@@ -21,8 +22,8 @@ public class GameManager : MonoBehaviour {
         Ally.reset();
         Enemy.reset();
 
-        allyPrefab = Resources.Load<GameObject>("Player");
-        enemyPrefab = Resources.Load<GameObject>("PlayerClone");
+        allyPrefab = Resources.Load<GameObject>("Players/Player");
+        enemyPrefab = Resources.Load<GameObject>("Players/PlayerClone");
 
         Physics2D.IgnoreLayerCollision(8, 10, true);
         Physics2D.IgnoreLayerCollision(9, 11, true);
@@ -33,7 +34,7 @@ public class GameManager : MonoBehaviour {
         scoreToWin = 3;
 
         allyDefaultPosition = new Vector3(-4.25f,-3.75f,10f);
-        enemyDefaultPosition = new Vector3(3.75f,3.75f,10f);
+        enemyDefaultPosition = new Vector3(4.25f,3.75f,10f);
 
         Instantiate(allyPrefab, allyDefaultPosition, Quaternion.identity);
         Instantiate(enemyPrefab, enemyDefaultPosition, Quaternion.identity);
@@ -52,23 +53,25 @@ public class GameManager : MonoBehaviour {
             if (Ally.isEliminated()) {
                 enemyScore++; Debug.Log("Enemy team win");
                 Debug.Log("Current score: " + allyScore + " " + enemyScore);
-                if (enemyScore >= scoreToWin) GameOver();
-                StartCoroutine(startNewRound());
+                roundStarted = false;
+                if (enemyScore >= scoreToWin) StartCoroutine(GameOver());
+                else {
+                    StartCoroutine(CleanupThenStartNewRound());
+                }
             }
             if (Enemy.isEliminated()) {
                 allyScore++; Debug.Log("Ally team win");
                 Debug.Log("Current score: " + allyScore + " " + enemyScore);
-                if (allyScore >= scoreToWin) GameOver();
-                StartCoroutine(startNewRound());
+                roundStarted = false;
+                if (allyScore >= scoreToWin) StartCoroutine(GameOver());
+                else {
+                    StartCoroutine(CleanupThenStartNewRound());
+                }
             }
         }
     }
 
     private IEnumerator startNewRound() {
-        roundStarted = false;
-
-        cleanup();
-
         foreach (GameObject p in allies) {
             //Debug.Log("an ally");
             p.GetComponent<Resetter>().reset();
@@ -81,7 +84,13 @@ public class GameManager : MonoBehaviour {
         }
 
         freezeAll();
-        yield return new WaitForSeconds(3f);
+        Debug.Log(3);
+        yield return new WaitForSeconds(1f);
+        Debug.Log(2);
+        yield return new WaitForSeconds(1f);
+        Debug.Log(1);
+        yield return new WaitForSeconds(1f);
+        Debug.Log("GO!");
         unfreezeAll();
 
         roundStarted = true;
@@ -99,15 +108,22 @@ public class GameManager : MonoBehaviour {
         foreach (GameObject p in enemies) p.GetComponent<ControlAccessSwitch>().enabled = true;
     }
 
-    void cleanup() {
+    private IEnumerator CleanupThenStartNewRound() {
+        yield return new WaitForSeconds(3f);
+        
         foreach (GameObject p in GameObject.FindGameObjectsWithTag("Orb")) {
             Destroy(p);
         }
+
+        StartCoroutine(startNewRound());
     }
 
-    void GameOver() {
+    private IEnumerator GameOver() {
         // TODO: Message indicating winning team should appear on screen
         Debug.Log("Game over");
+        yield return new WaitForSeconds(1f);
+        Debug.Log("Redirecting to the main menu...");
+        yield return new WaitForSeconds(2f);
         SceneManager.LoadScene("MainMenu");
     }
 }

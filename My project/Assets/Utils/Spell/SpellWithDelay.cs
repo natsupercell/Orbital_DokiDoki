@@ -5,7 +5,7 @@ using UnityEngine;
 public class SpellWithDelay : Spell {
     public float delay = 0.5f;
     public SpellWithDelay(string name) : base(name) {}
-    public override void activate(GameObject parent) {
+    public override void Activate(GameObject parent) {
         if (state == State.None) {
             aiming(parent);
             Debug.Log("aiming");

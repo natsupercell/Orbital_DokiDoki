@@ -6,7 +6,6 @@ public class LaserBeam : MonoBehaviour, AmmoType {
     public float laserLength = 100f;
     public float delay = 0.01f;
     public float duration = 0.1f;
-    public int laserDamage = 10;
     public LineRenderer lineRenderer;
     public LayerMask hitLayers; // Layers to include in raycasting
 

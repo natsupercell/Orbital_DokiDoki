@@ -29,33 +29,51 @@ public class Movement : MonoBehaviour
     {
         if (control.enabled)
         {
-            // Reset movement to zero
-            movement = Vector2.zero;
-
             // Check for individual key presses to prevent diagonal movement
-            if (Input.GetKey(moveKeys[0]))
+            if (Input.GetKeyDown(moveKeys[0])) GoLeft();
+            else if (Input.GetKeyDown(moveKeys[1])) GoRight();
+            else if (Input.GetKeyDown(moveKeys[2])) GoUp();
+            else if (Input.GetKeyDown(moveKeys[3])) GoDown();
+
+            if (movement == Vector2.zero
+                || (Input.GetKeyUp(moveKeys[0]) && movement == Vector2.left)
+                || (Input.GetKeyUp(moveKeys[1]) && movement == Vector2.right)
+                || (Input.GetKeyUp(moveKeys[2]) && movement == Vector2.up)
+                || (Input.GetKeyUp(moveKeys[3]) && movement == Vector2.down))
             {
-                movement = Vector2.left;
-                direction = Direction.LEFT;
-            }
-            else if (Input.GetKey(moveKeys[1]))
-            {
-                movement = Vector2.right;
-                direction = Direction.RIGHT;
-            }
-            else if (Input.GetKey(moveKeys[2]))
-            {
-                movement = Vector2.up;
-                direction = Direction.UP;
-            }
-            else if (Input.GetKey(moveKeys[3]))
-            {
-                movement = Vector2.down;
-                direction = Direction.DOWN;
+                if (Input.GetKey(moveKeys[0])) GoLeft();
+                else if (Input.GetKey(moveKeys[1])) GoRight();
+                else if (Input.GetKey(moveKeys[2])) GoUp();
+                else if (Input.GetKey(moveKeys[3])) GoDown();
+                else movement = Vector2.zero;
             }
         }
         // Update animations
-        UpdateAnimations();
+        // UpdateAnimations();
+    }
+
+    private void GoLeft() {
+        movement = Vector2.left;
+        direction = Direction.LEFT;
+        transform.rotation = direction.toQuaternion();
+    }
+
+    private void GoRight() {
+        movement = Vector2.right;
+        direction = Direction.RIGHT;
+        transform.rotation = direction.toQuaternion();
+    }
+
+    private void GoUp() {
+        movement = Vector2.up;
+        direction = Direction.UP;
+        transform.rotation = direction.toQuaternion();
+    }
+
+    private void GoDown() {
+        movement = Vector2.down;
+        direction = Direction.DOWN;
+        transform.rotation = direction.toQuaternion();
     }
 
     public void Stop() {

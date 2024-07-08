@@ -26,14 +26,10 @@ public class Bullet : MonoBehaviour, AmmoType {
 
     // Update is called once per frame
     void OnTriggerEnter2D(Collider2D hitInfo) {
-        Team team = hitInfo.GetComponent<Team>();
-        if (team is Enemy) {
-            Debug.Log("hit " + hitInfo.ToString());
-            // Implement logic for when the laser hits something
-            Hitbox hitbox = hitInfo.GetComponent<Hitbox>();
-            if (hitbox != null) {
-                hitbox.takeDamage();
-            }
+        // Implement logic for when the bullet hits something
+        Hitbox hitbox = hitInfo.GetComponent<Hitbox>();
+        if (hitbox != null) {
+            hitbox.takeDamage();
         }
         Destroy(gameObject);
     }

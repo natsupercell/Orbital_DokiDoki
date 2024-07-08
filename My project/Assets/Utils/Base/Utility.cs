@@ -6,11 +6,6 @@ public class Utility : MonoBehaviour, Resource {
     // Utility's name
     public new string name;
     /*
-     * Check if the utility has no more charges
-     * (Side note) Reusable.empty is always false 
-     */
-    private bool empty;
-    /*
      * Cost of using this weapon
      * (Side note) NonWeapon.cost is always 0 
      */
@@ -19,24 +14,14 @@ public class Utility : MonoBehaviour, Resource {
     // Instantiating
     public Utility(string name) {
         this.name = name;
-        empty = false;
         cost = 0;
     }
 
-    // ranOut() change an utility's state to empty
-    public void ranOut() {
-        empty = true;
-    }
-
-    /*
-     * If destroy() returns true, the UtilitySlot holding it will be
-     * converted to an empty slot
-     */
-    public bool destroy() {
-        return empty;
+    public string getName() {
+        return name;
     }
 
     // Activating 
-    public virtual void activate(GameObject parent) {}
-    public virtual void deactivate(GameObject parent) {}
+    public virtual void Activate(GameObject parent) {}
+    public virtual void Deactivate(GameObject parent) {}
 }

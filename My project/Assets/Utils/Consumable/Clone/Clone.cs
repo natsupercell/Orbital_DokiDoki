@@ -7,8 +7,8 @@ public class Clone : Consumable {
     public GameObject playerPrefab;
     public Clone() : base("clone", 1) {}
 
-    public override void activate(GameObject parent) {
-        base.activate(parent);
+    public override void ReallyActivate(GameObject parent) {
+        base.Activate(parent);
         if (PhotonNetwork.IsConnectedAndReady) {
             PhotonNetwork.Instantiate(
                 playerPrefab.name, 

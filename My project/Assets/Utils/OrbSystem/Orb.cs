@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Orb : MonoBehaviour {
-    public Resource content;
+    /*
+        public GameObject content;
+        The content is replaced by the child object
+    */
     public static GameObject prefab;
 
     public static void Initialize() {
@@ -15,19 +18,28 @@ public class Orb : MonoBehaviour {
         rb.sleepMode = RigidbodySleepMode2D.NeverSleep;
     }
 
-    public static void create(Resource resource, Transform transform) {
-        if (resource != null) {
-            GameObject newOrb = Instantiate(prefab, transform.position + new Vector3(0f,0f,-10f), Quaternion.identity);
-            newOrb.GetComponent<Orb>().content = resource;
+    public void Add(GameObject resource) {
+        resource.transform.SetParent(transform, false);
+    }
 
-            Debug.Log("Created a new " + resource + " orb");
+    public static void Create(GameObject resource, Transform transform) {
+        if (resource != null) {
+            GameObject newOrb = Instantiate(prefab, transform.position + new Vector3(0f,0f,10f), Quaternion.identity);
+            newOrb.GetComponent<Orb>().Add(resource);
+
+            Debug.Log("Created a new " + resource.GetComponent<Resource>().getName() + " orb");
         }
     }
 
-    public Resource extract() {
+    private GameObject GetContent() {
+        return transform.GetChild(0).gameObject;
+    }
+
+    public GameObject Extract() {
         gameObject.SetActive(false);
-        Resource output = content;
-        content = null;
-        return output;
+        GameObject content = GetContent();
+        content.transform.SetParent(null, false);
+        content.SetActive(false);
+        return content;
     }
 }

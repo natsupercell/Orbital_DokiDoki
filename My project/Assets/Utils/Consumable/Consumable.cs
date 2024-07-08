@@ -15,8 +15,13 @@ public class Consumable : Utility {
     public Consumable(string name) : this(name, 1) {}
 
     // Activating, reducing number of charges by 1
-    public override void activate(GameObject parent) {
-        charges--;
-        if (charges == 0) ranOut();
+    public override void Activate(GameObject parent) {
+        if (charges <= 0) Debug.Log("No more charges!");
+        else { 
+            charges--;
+            ReallyActivate(parent);
+        }
     }
+
+    public virtual void ReallyActivate(GameObject parent) {}
 }

@@ -6,7 +6,7 @@ public class DebugLogger : MonoBehaviour
 {
     public TextMeshProUGUI debugText; // Reference to the TextMeshProUGUI component
     private List<string> logMessages = new List<string>(); // List to store log messages
-    private const int maxMessages = 3; // Maximum number of messages to display
+    private const int maxMessages = 10; // Maximum number of messages to display
 
     void OnEnable()
     {

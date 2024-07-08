@@ -13,13 +13,16 @@ public class AudioManager : MonoBehaviour
     public AudioClip spawn;
     public AudioClip shooting;
     public AudioClip laser;
-    public AudioClip orbcollect;
+    public AudioClip shootRocket;
+    public AudioClip rocketExplode;
+    public AudioClip flame;
+    public AudioClip orbCollect;
     public AudioClip click;
 
     private void Start()
     {
        musicSource.clip = background;
-       musicSource.Play();
+       //musicSource.Play();
     }
 
     public void PlaySFX(AudioClip clip)

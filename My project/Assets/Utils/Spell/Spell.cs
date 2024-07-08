@@ -42,7 +42,7 @@ public class Spell : Utility {
         parent.GetComponent<ControlAccessSwitch>().enabled = true;
     }
 
-    public override void activate(GameObject parent) {
+    public override void Activate(GameObject parent) {
         if (state == State.None) {
             aiming(parent);
             Debug.Log("aiming");
@@ -54,7 +54,7 @@ public class Spell : Utility {
         switchState();
     }
 
-    public override void deactivate(GameObject parent) {
+    public override void Deactivate(GameObject parent) {
         state = State.None;
         notAiming(parent);
     }
