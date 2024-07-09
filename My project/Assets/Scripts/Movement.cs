@@ -49,7 +49,7 @@ public class Movement : MonoBehaviour
             }
         }
         // Update animations
-        // UpdateAnimations();
+        UpdateAnimations();
     }
 
     private void GoLeft() {
@@ -90,33 +90,17 @@ public class Movement : MonoBehaviour
         float speed = movement.sqrMagnitude;
         bool isMoving = speed > 0.00001f;
         
-        animator.SetFloat("Speed", speed);
         animator.SetBool("IsMoving", isMoving);
 
         if (!isMoving)
         {
-            // Play idle animation based on the facing direction
-            switch (direction)
-            {
-                case Direction.LEFT:
-                    animator.Play("IdleLeft");
-                    break;
-                case Direction.RIGHT:
-                    animator.Play("IdleRight");
-                    break;
-                case Direction.UP:
-                    animator.Play("IdleUp");
-                    break;
-                case Direction.DOWN:
-                    animator.Play("IdleDown");
-                    break;
-            }
+            // Play idle animation 
+            animator.Play("Idle");
         }
         else
         {
             // Play walking animation
-            animator.SetFloat("Horizontal", movement.x);
-            animator.SetFloat("Vertical", movement.y);
+            animator.Play("Move");
         }
     }
 }
