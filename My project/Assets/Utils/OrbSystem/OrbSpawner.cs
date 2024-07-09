@@ -34,7 +34,7 @@ public class OrbSpawner : MonoBehaviour {
 
     public void Update() {
         if (Input.GetKeyDown(key[0])) {
-            spawnOrb("laser");
+            spawnOrb("shield");
         }
         if (Input.GetKeyDown(key[1])) {
             spawnOrb("flame thrower");

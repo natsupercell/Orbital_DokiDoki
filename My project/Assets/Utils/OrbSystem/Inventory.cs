@@ -118,6 +118,7 @@ public class Inventory : MonoBehaviour {
             GameObject resource = orb.Extract();
             Resource test = resource.GetComponent<Resource>();
             if (test is Weapon) StartCoroutine(PickUpWeapon(resource));
+            else if (test is Shield) StartCoroutine(PickUpShield(resource));
             else if (test is Energy) StartCoroutine(RechargeEnergy(resource));
         }
     }
@@ -150,6 +151,16 @@ public class Inventory : MonoBehaviour {
     private bool IsHoldingWeapon() {
         // currentSlot should be 0, slot[0] is the only slot holding a weapon.
         return currentSlot == 0;
+    }
+
+    private IEnumerator PickUpShield(GameObject shield) {
+        if (shield != null) {
+            transform.parent.GetComponent<Hitbox>().GetShield();
+
+            pickUpAble = false;
+            yield return new WaitForSeconds(delay);
+            pickUpAble = true;
+        }
     }
 
     private IEnumerator RechargeEnergy(GameObject energyObj) {

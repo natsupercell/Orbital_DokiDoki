@@ -25,18 +25,36 @@ public class Hitbox : MonoBehaviour {
         }
     }
 
-    public void Vulnerable(float duration) {
-        StartCoroutine(IVulnerable(duration));
+    public void GetShield() {
+        shielded = true;
     }
 
-    public void Invincible(float duration) {
-        StartCoroutine(IInvincible(duration));
+/*
+    public void GetTemporaryShield(float duration) {
+        if (!shielded) {
+            StartCoroutine(IGetTemporaryShield(duration));
+        }
+    }
+
+    private IEnumerator IGetTemporaryShield(float duration) {
+        shielded = true;
+        yield return new WaitForSeconds(duration);
+        shielded = false;
+    }
+*/
+
+    public void Vulnerable(float duration) {
+        StartCoroutine(IVulnerable(duration));
     }
 
     private IEnumerator IVulnerable(float duration) {
         vulnerable = true;
         yield return new WaitForSeconds(duration);
         vulnerable = false;
+    }
+
+    public void Invincible(float duration) {
+        StartCoroutine(IInvincible(duration));
     }
 
     private IEnumerator IInvincible(float duration) {
