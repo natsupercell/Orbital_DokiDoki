@@ -25,27 +25,25 @@ public class Movement : MonoBehaviour
         Physics2D.gravity = Vector2.zero;
     }
 
-    public virtual void Update()
-    {
-        if (control.enabled)
-        {
-            // Check for individual key presses to prevent diagonal movement
-            if (Input.GetKeyDown(moveKeys[0])) GoLeft();
-            else if (Input.GetKeyDown(moveKeys[1])) GoRight();
-            else if (Input.GetKeyDown(moveKeys[2])) GoUp();
-            else if (Input.GetKeyDown(moveKeys[3])) GoDown();
-
-            if (movement == Vector2.zero
-                || (Input.GetKeyUp(moveKeys[0]) && movement == Vector2.left)
-                || (Input.GetKeyUp(moveKeys[1]) && movement == Vector2.right)
-                || (Input.GetKeyUp(moveKeys[2]) && movement == Vector2.up)
-                || (Input.GetKeyUp(moveKeys[3]) && movement == Vector2.down))
-            {
-                if (Input.GetKey(moveKeys[0])) GoLeft();
-                else if (Input.GetKey(moveKeys[1])) GoRight();
-                else if (Input.GetKey(moveKeys[2])) GoUp();
-                else if (Input.GetKey(moveKeys[3])) GoDown();
-                else movement = Vector2.zero;
+    public virtual void Update() {
+        if (view.IsMine) {
+            if (control.enabled) {
+                // Check for individual key presses to prevent diagonal movement
+                if (Input.GetKeyDown(moveKeys[0])) GoLeft();
+                else if (Input.GetKeyDown(moveKeys[1])) GoRight();
+                else if (Input.GetKeyDown(moveKeys[2])) GoUp();
+                else if (Input.GetKeyDown(moveKeys[3])) GoDown();
+                if (movement == Vector2.zero
+                        || (Input.GetKeyUp(moveKeys[0]) && movement == Vector2.left)
+                        || (Input.GetKeyUp(moveKeys[1]) && movement == Vector2.right)
+                        || (Input.GetKeyUp(moveKeys[2]) && movement == Vector2.up)
+                        || (Input.GetKeyUp(moveKeys[3]) && movement == Vector2.down)) {
+                    if (Input.GetKey(moveKeys[0])) GoLeft();
+                    else if (Input.GetKey(moveKeys[1])) GoRight();
+                    else if (Input.GetKey(moveKeys[2])) GoUp();
+                    else if (Input.GetKey(moveKeys[3])) GoDown();
+                    else movement = Vector2.zero;
+                }
             }
         }
         // Update animations

@@ -6,7 +6,7 @@ public class ControlAccessSwitch : MonoBehaviour {
     public new bool enabled;
 
     private void Start() {
-        enabled = false;
+        enabled = true;
     }
 
     public void disable() {

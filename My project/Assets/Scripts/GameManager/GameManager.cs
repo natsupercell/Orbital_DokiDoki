@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using Photon.Pun;
 
-public class GameManager : MonoBehaviour {
+public class GameManager : MonoBehaviourPunCallbacks {
     public List<GameObject> allies;
     public List<GameObject> enemies;
     public int allyScore;
@@ -16,9 +16,14 @@ public class GameManager : MonoBehaviour {
 
     public GameObject allyPrefab;
     public GameObject enemyPrefab;
+
+    public void Awake() {
+        if (PhotonNetwork.IsMasterClient) {
+            InitializeGame();
+        }
+    }
     
-    //public ObjectPool pooler;
-    void Awake() {
+    public void InitializeGame() {
         Ally.reset();
         Enemy.reset();
 
@@ -36,18 +41,17 @@ public class GameManager : MonoBehaviour {
         allyDefaultPosition = new Vector3(-4.25f,-3.75f,10f);
         enemyDefaultPosition = new Vector3(4.25f,3.75f,10f);
 
-        Instantiate(allyPrefab, allyDefaultPosition, Quaternion.identity);
-        Instantiate(enemyPrefab, enemyDefaultPosition, Quaternion.identity);
+        // PhotonNetwork.Instantiate(allyPrefab, allyDefaultPosition, Quaternion.identity);
+        // PhotonNetwork.Instantiate(enemyPrefab, enemyDefaultPosition, Quaternion.identity);
 
-        allies.AddRange(GameObject.FindGameObjectsWithTag("Ally"));
-        enemies.AddRange(GameObject.FindGameObjectsWithTag("Enemy"));
+        // allies.AddRange(GameObject.FindGameObjectsWithTag("Ally"));
+        // enemies.AddRange(GameObject.FindGameObjectsWithTag("Enemy"));
 
         roundStarted = false;
-        StartCoroutine(startNewRound());
-
-        //pooler = GameObject.FindGameObjectsWithTag("Pooler")[0].GetComponent<ObjectPool>();
+        // StartCoroutine(startNewRound());
     }
 
+/*
     void Update() {
         if (roundStarted) {
             if (Ally.isEliminated()) {
@@ -70,6 +74,7 @@ public class GameManager : MonoBehaviour {
             }
         }
     }
+*/
 
     private IEnumerator startNewRound() {
         foreach (GameObject p in allies) {

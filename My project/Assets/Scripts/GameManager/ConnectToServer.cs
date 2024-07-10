@@ -8,7 +8,7 @@ public class ConnectToServer : MonoBehaviourPunCallbacks {
     private void Start() {
         PhotonNetwork.NetworkingClient.AppId = "4ad07916-a8bb-4790-a79a-8930a20bee76";
         PhotonNetwork.ConnectUsingSettings();
-        //PhotonNetwork.ConnectToRegion("asia");
+        // PhotonNetwork.ConnectToRegion("asia");
     }
 
     public override void OnConnectedToMaster() {
