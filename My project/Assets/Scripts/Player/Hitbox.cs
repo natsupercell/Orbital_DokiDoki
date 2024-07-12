@@ -20,7 +20,7 @@ public class Hitbox : MonoBehaviour {
             }
             else {
                 team.died();
-                gameObject.SetActive(false);
+                gameObject.GetComponent<PhotonCustomControl>().DisableRPC();
             }
         }
     }

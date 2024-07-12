@@ -1,24 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class OrbSpawner : MonoBehaviour {
+public class OrbSpawner : MonoBehaviourPunCallbacks {
     public KeyCode[] key;
     public ObjectPool pooler;
-
-    /* For debugging */ public float INCREMENT = 0.2f; public int SCALE = 0; 
+    public PhotonView view;
 
     public void Awake() {
         this.pooler = GetComponent<ObjectPool>();
+        this.view = GetComponent<PhotonView>();
     }
 
-    public void spawnOrb(string tag) {
-        GameObject resource = pooler.spawnFromPool(tag);
-        GameObject orb = pooler.spawnFromPool("orb");
+    public void SpawnOrb(string tag) {
+        GameObject resource = pooler.SpawnFromPool(tag);
+        GameObject orb = pooler.SpawnFromPool("Orb");
 
         // Instantiating the orb
         if (resource != null) {
-            orb.transform.position = transform.position + new Vector3(INCREMENT * (SCALE % 2),0f,-10f); SCALE++;
+            orb.GetComponent<PhotonCustomControl>().MoveRPC(transform.position + new Vector3(0f,0f,-10f));
             orb.GetComponent<Orb>().Add(resource);
 
             Debug.Log("Created a new " + resource.GetComponent<Resource>().getName() + " orb");
@@ -33,17 +34,19 @@ public class OrbSpawner : MonoBehaviour {
     }
 
     public void Update() {
-        if (Input.GetKeyDown(key[0])) {
-            spawnOrb("shield");
-        }
-        if (Input.GetKeyDown(key[1])) {
-            spawnOrb("flame thrower");
-        }
-        if (Input.GetKeyDown(key[2])) {
-            spawnOrb("rocket launcher");
-        }
-        if (Input.GetKeyDown(key[3])) {
-            spawnOrb("energy");
+        if (view.IsMine) {
+            if (Input.GetKeyDown(key[0])) {
+                SpawnOrb("Shield");
+            }
+            if (Input.GetKeyDown(key[1])) {
+                SpawnOrb("Flame Thrower");
+            }
+            if (Input.GetKeyDown(key[2])) {
+                SpawnOrb("Rocket Launcher");
+            }
+            if (Input.GetKeyDown(key[3])) {
+                SpawnOrb("Energy");
+            }
         }
     }
 }

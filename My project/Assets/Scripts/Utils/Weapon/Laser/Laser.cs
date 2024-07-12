@@ -8,8 +8,8 @@ public class Laser : Weapon {
 
     public override void Awake() {
         base.Awake();
-        string prefabPath = "AmmoTypes/LaserBeam";
-        ammoType = Resources.Load<GameObject>(prefabPath);
+        ammoPath = "AmmoTypes/LaserBeam";
+        ammoType = Resources.Load<GameObject>(ammoPath);
         audio = audioManager.laser;
     }
 }

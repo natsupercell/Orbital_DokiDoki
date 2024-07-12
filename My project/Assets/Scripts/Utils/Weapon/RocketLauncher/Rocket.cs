@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class Rocket : MonoBehaviour, AmmoType {
     public float speed = 9f;
     public Rigidbody2D rb;
     public GameObject damagingArea;
+    public string ammoPath;
     private AudioManager audioManager;
     private new AudioClip audio;
 
@@ -13,8 +15,8 @@ public class Rocket : MonoBehaviour, AmmoType {
     void Start() {
         rb = GetComponent<Rigidbody2D>();
         rb.velocity = transform.right * speed;
-        string prefabPath = "AmmoTypes/RocketExplosiveArea";
-        damagingArea = Resources.Load<GameObject>(prefabPath);
+        ammoPath = "AmmoTypes/RocketExplosiveArea";
+        damagingArea = Resources.Load<GameObject>(ammoPath);
 
         // optimise this
         audioManager = GameObject.FindGameObjectWithTag("Audio").GetComponent<AudioManager>();
@@ -39,7 +41,7 @@ public class Rocket : MonoBehaviour, AmmoType {
         Debug.Log("hit");
         audioManager.PlaySFX(audio);
         //StartCoroutine(Explode());
-        Instantiate(damagingArea, transform.position, Quaternion.identity);
+        PhotonNetwork.Instantiate(ammoPath, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }
 

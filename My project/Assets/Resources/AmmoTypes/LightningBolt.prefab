@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 4986542150472613133}
   - component: {fileID: -249442109994702085}
   - component: {fileID: 6720680073170801911}
+  - component: {fileID: -6091714694913357763}
+  - component: {fileID: 1425469536125235574}
   m_Layer: 0
   m_Name: LightningBolt
   m_TagString: Untagged
@@ -99,3 +101,37 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   duration: 0.1
   damage: 10
+--- !u!114 &-6091714694913357763
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7604516227239338027}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &1425469536125235574
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7604516227239338027}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9be3b18acf9974a55b4b39a397e279d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

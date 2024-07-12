@@ -30,11 +30,11 @@ public class Inventory : MonoBehaviour {
         }
 
         public void Enable() {
-            util?.SetActive(true);
+            util?.GetComponent<PhotonCustomControl>().EnableRPC();
         }
 
         public void Disable() {
-            util?.SetActive(false);
+            util?.GetComponent<PhotonCustomControl>().DisableRPC();
         }
     }
 
@@ -137,6 +137,7 @@ public class Inventory : MonoBehaviour {
     }
 
     private void PickUp(GameObject weapon) {
+        // weapon.GetComponent<PhotonCustomControl>().SetParentRPC(gameObject, false);
         weapon.transform.SetParent(gameObject.transform, false);
         slot[0].util = weapon;
         if (IsHoldingWeapon()) slot[0].Enable();

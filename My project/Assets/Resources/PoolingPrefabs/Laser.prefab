@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 6497697859056912787}
   - component: {fileID: 1371246445573457599}
   - component: {fileID: 106762465787037940}
+  - component: {fileID: 481065002401502562}
+  - component: {fileID: -1477038509768295809}
   m_Layer: 0
   m_Name: Laser
   m_TagString: Untagged
@@ -48,6 +50,7 @@ MonoBehaviour:
   name: laser
   cost: 2
   ammoType: {fileID: 0}
+  ammoPath: 
 --- !u!212 &106762465787037940
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -100,3 +103,37 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &481065002401502562
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1564369854060885694}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &-1477038509768295809
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1564369854060885694}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9be3b18acf9974a55b4b39a397e279d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

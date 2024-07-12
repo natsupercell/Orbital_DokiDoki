@@ -1,32 +1,52 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
+using UnityEditor;
 
-public class ObjectPool : MonoBehaviour {
+public class ObjectPool : MonoBehaviourPunCallbacks {
+    public void Disable(GameObject obj) {
+        obj.transform.position = new Vector3(400 ,400, 400);
+    }
+
+    /*
+    public void Enable(GameObject obj) {
+        obj.transform.position = new Vector3(400 ,400, 400);
+    }
+    */
+    public string GetResourcesPath(string tag) {
+        return "PoolingPrefabs/" + tag;
+    } 
+
     [System.Serializable]
     public class Pool {
         public string tag;
-        public GameObject prefab;
         public int size;
-        Pool(string tag, GameObject prefab, int size) {
+        Pool(string tag, int size) {
             this.tag = tag;
-            this.prefab = prefab;
             this.size = size;
         }
     }
     
     public List<Pool> pools;
     public Dictionary<string, Queue<GameObject>> producer;
-    //public Queue<GameObject> cleaner;
+    public PhotonView view;
 
-    public void Start() {
+    public void Awake() {
+        view = GetComponent<PhotonView>();
+        if (PhotonNetwork.IsMasterClient) {
+            LoadPrefabs();
+        }
+    }
+    
+
+    public void LoadPrefabs() {
         producer = new Dictionary<string, Queue<GameObject>>();
-        //cleaner = new Queue<GameObject>();
         foreach (Pool pool in pools) {
             Queue<GameObject> queue = new Queue<GameObject>();
             for (int i = 0; i < pool.size; i++) {
-                GameObject obj = Instantiate(pool.prefab);
-                obj.SetActive(false);
+                GameObject obj = PhotonNetwork.Instantiate(GetResourcesPath(pool.tag), new Vector3(0,0,0), Quaternion.identity);
+                obj.GetComponent<PhotonCustomControl>().DisableRPC();
                 queue.Enqueue(obj);
             }
 
@@ -34,7 +54,7 @@ public class ObjectPool : MonoBehaviour {
         }
     }
 
-    public GameObject spawnFromPool(string tag, Vector3 position, Quaternion rotation) {
+    public GameObject SpawnFromPool(string tag, Vector3 position, Quaternion rotation) {
         if (!producer.ContainsKey(tag)) {
             Debug.LogWarning("Pool with tag " + tag + " doesn't exist");
             return null;
@@ -42,9 +62,8 @@ public class ObjectPool : MonoBehaviour {
 
         GameObject objectToSpawn = producer[tag].Dequeue(); 
 
-        objectToSpawn.SetActive(true);
-        objectToSpawn.transform.position = position;
-        objectToSpawn.transform.rotation = rotation;
+        objectToSpawn.GetComponent<PhotonCustomControl>().EnableRPC();
+        objectToSpawn.GetComponent<PhotonCustomControl>().MoveRPC(position, rotation);
 
         producer[tag].Enqueue(objectToSpawn);
         //cleaner.Enqueue(objectToSpawn);
@@ -53,8 +72,8 @@ public class ObjectPool : MonoBehaviour {
         return objectToSpawn;
     }
 
-    public GameObject spawnFromPool(string tag) { 
-        return spawnFromPool(tag, Vector3.zero, Quaternion.identity);
+    public GameObject SpawnFromPool(string tag) { 
+        return SpawnFromPool(tag, Vector3.zero, Quaternion.identity);
     }
 
     /*

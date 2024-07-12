@@ -16,7 +16,7 @@ public class Energy : MonoBehaviour, Resource {
     }
 
     public int getValue() {
-        Destroy(this);
+        GetComponent<PhotonCustomControl>().DisableRPC();
         return value;
     }
 

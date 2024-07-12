@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 6835030248688461820}
   - component: {fileID: 3819594877738796772}
   - component: {fileID: 4341041034906782236}
+  - component: {fileID: 3077907193932715478}
+  - component: {fileID: -2662482996557785852}
   m_Layer: 0
   m_Name: Gun
   m_TagString: Untagged
@@ -48,6 +50,7 @@ MonoBehaviour:
   name: gun
   cost: 1
   ammoType: {fileID: 0}
+  ammoPath: 
 --- !u!212 &4341041034906782236
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -100,3 +103,37 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &3077907193932715478
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4425643445590116560}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &-2662482996557785852
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4425643445590116560}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9be3b18acf9974a55b4b39a397e279d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

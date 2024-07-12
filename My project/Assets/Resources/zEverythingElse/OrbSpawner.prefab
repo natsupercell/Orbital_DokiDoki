@@ -12,9 +12,10 @@ GameObject:
   - component: {fileID: 5240305880705148345}
   - component: {fileID: 1714400039914362890}
   - component: {fileID: -7234961138882347531}
+  - component: {fileID: 5921203744158826448}
   m_Layer: 0
   m_Name: OrbSpawner
-  m_TagString: Untagged
+  m_TagString: Pooler
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -28,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 7333631963340422912}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 20}
+  m_LocalPosition: {x: 0, y: -1, z: 30}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -98,7 +99,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68a9502a1d5c44838956e807a1acdc35, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  pools: []
+  pools:
+  - tag: Laser
+    size: 10
+  - tag: Energy
+    size: 10
+  - tag: Gun
+    size: 10
+  - tag: Orb
+    size: 10
+  - tag: Rocket Launcher
+    size: 10
+  - tag: Flame Thrower
+    size: 10
+  - tag: Shield
+    size: 10
+  view: {fileID: 0}
 --- !u!114 &-7234961138882347531
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -111,5 +127,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c5985f12620043b1ad40d133c31b14e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  key: 
-  pooler: {fileID: 0}
+  key: 34000000350000003600000037000000
+  pooler: {fileID: 1714400039914362890}
+  view: {fileID: 0}
+--- !u!114 &5921203744158826448
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7333631963340422912}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0

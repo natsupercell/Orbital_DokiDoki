@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 1014893601542493321}
   - component: {fileID: 1314352863453297149}
   - component: {fileID: 5831335359326054100}
+  - component: {fileID: 4746212990725590220}
+  - component: {fileID: 3694902855858166638}
   m_Layer: 0
   m_Name: Rocket Launcher
   m_TagString: Untagged
@@ -48,6 +50,7 @@ MonoBehaviour:
   name: rocket launcher
   cost: 3
   ammoType: {fileID: 0}
+  ammoPath: 
 --- !u!212 &5831335359326054100
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -100,3 +103,37 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &4746212990725590220
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 604626405651280617}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &3694902855858166638
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 604626405651280617}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9be3b18acf9974a55b4b39a397e279d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

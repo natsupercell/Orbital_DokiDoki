@@ -7,8 +7,8 @@ public class Gun : Weapon {
 
     public override void Awake() {      
         base.Awake();
-        string prefabPath = "AmmoTypes/Bullet";
-        ammoType = Resources.Load<GameObject>(prefabPath);
+        ammoPath = "AmmoTypes/Bullet";
+        ammoType = Resources.Load<GameObject>(ammoPath);
         audio = audioManager.shooting;
     }
 }

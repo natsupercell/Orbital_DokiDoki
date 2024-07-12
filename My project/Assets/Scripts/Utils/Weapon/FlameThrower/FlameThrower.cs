@@ -7,8 +7,8 @@ public class FlameThrower : Weapon {
 
     public override void Awake() {
         base.Awake();
-        string prefabPath = "AmmoTypes/Flame";
-        ammoType = Resources.Load<GameObject>(prefabPath);
+        ammoPath = "AmmoTypes/Flame";
+        ammoType = Resources.Load<GameObject>(ammoPath);
         audio = audioManager.flame;
     }
 }
