@@ -41,8 +41,8 @@ public class Orb : MonoBehaviour {
     public GameObject Extract() {
         gameObject.GetComponent<PhotonCustomControl>().DisableRPC();
         GameObject content = GetContent();
-        // content.GetComponent<PhotonCustomControl>().SetParentRPC(null, false);
-        content.transform.SetParent(null, false);
+        content.GetComponent<PhotonCustomControl>().SetParentRPC(null, false);
+        // content.transform.SetParent(null, false);
         content.GetComponent<PhotonCustomControl>().DisableRPC();
         return content;
     }

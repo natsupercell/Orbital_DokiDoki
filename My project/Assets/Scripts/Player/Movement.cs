@@ -12,6 +12,8 @@ public class Movement : MonoBehaviour
     private ControlAccessSwitch control;
     public Direction direction = Direction.RIGHT;
     private Vector2 movement;
+    private bool isMoving = false;
+
     [SerializeField]
     public KeyCode[] moveKeys = new KeyCode[4];
 
@@ -42,54 +44,65 @@ public class Movement : MonoBehaviour
                     else if (Input.GetKey(moveKeys[1])) GoRight();
                     else if (Input.GetKey(moveKeys[2])) GoUp();
                     else if (Input.GetKey(moveKeys[3])) GoDown();
-                    else movement = Vector2.zero;
+                    else Stop();
                 }
             }
         }
-        // Update animations
-        UpdateAnimations();
     }
 
     private void GoLeft() {
         movement = Vector2.left;
         direction = Direction.LEFT;
         transform.rotation = direction.toQuaternion();
+        if (!isMoving) { 
+            isMoving = true;
+            UpdateRPC();
+        }
+        
     }
 
     private void GoRight() {
         movement = Vector2.right;
         direction = Direction.RIGHT;
         transform.rotation = direction.toQuaternion();
+        if (!isMoving) { 
+            UpdateRPC();
+        }
     }
 
     private void GoUp() {
         movement = Vector2.up;
         direction = Direction.UP;
         transform.rotation = direction.toQuaternion();
+        if (!isMoving) { 
+            UpdateRPC();
+        }
     }
 
     private void GoDown() {
         movement = Vector2.down;
         direction = Direction.DOWN;
         transform.rotation = direction.toQuaternion();
+        if (!isMoving) { 
+            UpdateRPC();
+        }
     }
 
     public void Stop() {
         movement = Vector2.zero;
+        if (isMoving) { 
+            UpdateRPC();
+        }
     }
 
-    void FixedUpdate()
-    {
+    void FixedUpdate() {
         // Move the player
         rb.MovePosition(rb.position + movement * speed * Time.fixedDeltaTime);
     }
-    void UpdateAnimations()
-    {
-        float speed = movement.sqrMagnitude;
-        bool isMoving = speed > 0.00001f;
-        
-        animator.SetBool("IsMoving", isMoving);
 
+    [PunRPC]
+    void UpdateAnimations() {
+        animator.SetBool("IsMoving", isMoving);
         if (!isMoving)
         {
             // Play idle animation 
@@ -100,5 +113,15 @@ public class Movement : MonoBehaviour
             // Play walking animation
             animator.Play("Move");
         }
+    }
+
+    [PunRPC]
+    void ChangeMovingState() {
+        isMoving = !isMoving;
+    }
+
+    void UpdateRPC() {
+        view.RPC("ChangeMovingState", RpcTarget.All);
+        view.RPC("UpdateAnimations", RpcTarget.All);
     }
 }

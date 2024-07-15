@@ -24,8 +24,10 @@ public class Weapon : Utility {
         GameObject realParent = parent.transform.parent.gameObject;
         Direction direction = realParent.GetComponent<Movement>().direction;
         GameObject obj = PhotonNetwork.Instantiate(ammoPath, parent.transform.position, direction.toQuaternion());
+        // obj.GetComponent<PhotonCustomControl>().DisableRPC();
         AmmoType ammo = obj.GetComponent<AmmoType>();
-        ammo.excludeLayer(realParent.GetComponent<Team>().toLayer());
+        ammo.ExcludeLayerRPC(realParent.GetComponent<Team>().toLayer());
+        // obj.GetComponent<PhotonCustomControl>().EnableRPC();
         /* if (audio != null) */ audioManager.PlaySFX(audio);
     }
 }

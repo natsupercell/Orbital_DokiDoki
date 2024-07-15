@@ -34,19 +34,23 @@ public class OrbSpawner : MonoBehaviourPunCallbacks {
     }
 
     public void Update() {
-        if (view.IsMine) {
-            if (Input.GetKeyDown(key[0])) {
-                SpawnOrb("Shield");
-            }
-            if (Input.GetKeyDown(key[1])) {
-                SpawnOrb("Flame Thrower");
-            }
-            if (Input.GetKeyDown(key[2])) {
-                SpawnOrb("Rocket Launcher");
-            }
-            if (Input.GetKeyDown(key[3])) {
-                SpawnOrb("Energy");
-            }
+        if (Input.GetKeyDown(key[0])) {
+            SpawnOrb("Shield");
+        }
+        if (Input.GetKeyDown(key[1])) {
+            SpawnOrb("Gun");
+        }
+        if (Input.GetKeyDown(key[2])) {
+            SpawnOrb("Laser");            
+        }
+        if (Input.GetKeyDown(key[3])) {
+            SpawnOrb("Rocket Launcher");
+        }
+        if (Input.GetKeyDown(key[4])) {
+            SpawnOrb("Flame Thrower");
+        }
+        if (Input.GetKeyDown(key[5])) {
+            SpawnOrb("Energy");
         }
     }
 }

@@ -69,7 +69,7 @@ public class Inventory : MonoBehaviour {
     }
     
     private void Update() {
-        //if (view.IsMine) {  
+        if (view.IsMine) {  
             if (control.enabled) {
                 for (int i = 0; i < 2; i++) if (Input.GetKeyDown(slot[i].key)) {
                     slot[currentSlot].Disable();
@@ -105,7 +105,7 @@ public class Inventory : MonoBehaviour {
                 }
             } 
             if (Input.GetKeyDown(deactivateKey)) slot[currentSlot].Deactivate(transform.parent.gameObject);
-        //}
+        }
     }
 
     public void OnTriggerStay2D(Collider2D box) {
@@ -137,8 +137,8 @@ public class Inventory : MonoBehaviour {
     }
 
     private void PickUp(GameObject weapon) {
-        // weapon.GetComponent<PhotonCustomControl>().SetParentRPC(gameObject, false);
-        weapon.transform.SetParent(gameObject.transform, false);
+        weapon.GetComponent<PhotonCustomControl>().SetParentRPC(gameObject, false);
+        // weapon.transform.SetParent(gameObject.transform, false);
         slot[0].util = weapon;
         if (IsHoldingWeapon()) slot[0].Enable();
     }
@@ -150,13 +150,13 @@ public class Inventory : MonoBehaviour {
     }
 
     private bool IsHoldingWeapon() {
-        // currentSlot should be 0, slot[0] is the only slot holding a weapon.
+        /* currentSlot should be 0, slot[0] is the only slot holding a weapon. */
         return currentSlot == 0;
     }
 
     private IEnumerator PickUpShield(GameObject shield) {
         if (shield != null) {
-            transform.parent.GetComponent<Hitbox>().GetShield();
+            transform.parent.GetComponent<Hitbox>().GetShieldRPC();
 
             pickUpAble = false;
             yield return new WaitForSeconds(delay);

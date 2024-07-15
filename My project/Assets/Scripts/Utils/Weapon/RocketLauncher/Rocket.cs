@@ -10,10 +10,15 @@ public class Rocket : MonoBehaviour, AmmoType {
     public string ammoPath;
     private AudioManager audioManager;
     private new AudioClip audio;
+    private PhotonView view;
+
+    void Awake() {
+        rb = GetComponent<Rigidbody2D>();
+        view = GetComponent<PhotonView>();
+    }
 
     // Start is called before the first frame update
     void Start() {
-        rb = GetComponent<Rigidbody2D>();
         rb.velocity = transform.right * speed;
         ammoPath = "AmmoTypes/RocketExplosiveArea";
         damagingArea = Resources.Load<GameObject>(ammoPath);
@@ -24,8 +29,13 @@ public class Rocket : MonoBehaviour, AmmoType {
         audio = audioManager.rocketExplode;
     }
 
+    [PunRPC]
     public void excludeLayer(int layer) {
         gameObject.layer = Team.toLayerToBeIgnored(layer);
+    }
+
+    public void ExcludeLayerRPC(int layer) {
+        view.RPC("excludeLayer", RpcTarget.All, layer);
     }
 
     void Update() {

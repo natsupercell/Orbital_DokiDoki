@@ -45,6 +45,13 @@ MonoBehaviour:
   - EnableObject
   - Move
   - SetParent
+  - GetShield
+  - Invincible
+  - TakeDamage
+  - Vulnerable
+  - excludeLayer
+  - ChangeMovingState
+  - UpdateAnimations
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

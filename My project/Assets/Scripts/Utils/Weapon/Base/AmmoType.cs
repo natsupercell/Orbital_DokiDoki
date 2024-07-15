@@ -3,5 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public interface AmmoType {
-    public void excludeLayer(int layer);
+    void excludeLayer(int layer);
+
+    public void ExcludeLayerRPC(int layer);
 }

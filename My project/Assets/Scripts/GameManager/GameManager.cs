@@ -18,9 +18,8 @@ public class GameManager : MonoBehaviourPunCallbacks {
     public GameObject enemyPrefab;
 
     public void Awake() {
-        // if (PhotonNetwork.IsMasterClient) {
-            InitializeGame();
-        // }
+        InitializeGame();
+        Debug.Log("ok");
     }
     
     public void InitializeGame() {

@@ -50,10 +50,6 @@ MonoBehaviour:
   laserLength: 100
   delay: 0.01
   duration: 0.1
-  lineRenderer: {fileID: 0}
-  hitLayers:
-    serializedVersion: 2
-    m_Bits: 0
 --- !u!120 &-7620794293900701858
 LineRenderer:
   serializedVersion: 2

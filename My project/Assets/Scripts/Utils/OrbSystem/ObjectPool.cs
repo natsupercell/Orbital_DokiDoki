@@ -5,15 +5,6 @@ using Photon.Pun;
 using UnityEditor;
 
 public class ObjectPool : MonoBehaviourPunCallbacks {
-    public void Disable(GameObject obj) {
-        obj.transform.position = new Vector3(400 ,400, 400);
-    }
-
-    /*
-    public void Enable(GameObject obj) {
-        obj.transform.position = new Vector3(400 ,400, 400);
-    }
-    */
     public string GetResourcesPath(string tag) {
         return "PoolingPrefabs/" + tag;
     } 
@@ -66,9 +57,7 @@ public class ObjectPool : MonoBehaviourPunCallbacks {
         objectToSpawn.GetComponent<PhotonCustomControl>().MoveRPC(position, rotation);
 
         producer[tag].Enqueue(objectToSpawn);
-        //cleaner.Enqueue(objectToSpawn);
 
-        // Debug.Log(objectToSpawn);
         return objectToSpawn;
     }
 

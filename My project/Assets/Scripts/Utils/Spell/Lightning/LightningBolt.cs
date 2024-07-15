@@ -17,7 +17,7 @@ public class LightningBolt : MonoBehaviour {
             // Deal damage to the hit object if it has a Hitbox component
             Hitbox hitbox = hit.collider.GetComponent<Hitbox>();
             if (hitbox != null) {
-                hitbox.takeDamage();
+                hitbox.TakeDamageRPC();
             }
         }
         yield return new WaitForSeconds(duration);

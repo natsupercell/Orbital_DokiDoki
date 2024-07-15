@@ -1,13 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class LaserBeam : MonoBehaviour, AmmoType {
     public float laserLength = 100f;
     public float delay = 0.01f;
     public float duration = 0.1f;
-    public LineRenderer lineRenderer;
-    public LayerMask hitLayers; // Layers to include in raycasting
+    private LineRenderer lineRenderer;
+    private LayerMask hitLayers; // Layers to include in raycasting
+    private PhotonView view;
 
     private void Awake() {
         hitLayers = LayerMask.GetMask("Ally", "Enemy", "Terrain");
@@ -15,13 +17,19 @@ public class LaserBeam : MonoBehaviour, AmmoType {
         lineRenderer.useWorldSpace = true;
         lineRenderer.enabled = false;
         StartCoroutine(ShootLaser());
+        view = GetComponent<PhotonView>();
     }
 
+    [PunRPC]
     public void excludeLayer(int layer) {
         string excludeLayer = LayerMask.LayerToName(layer);
         // originalLayerMask &= ~layerToRemove;
         hitLayers &= ~LayerMask.GetMask(excludeLayer);
         //Debug.Log(hitLayers.value);
+    }
+
+    public void ExcludeLayerRPC(int layer) {
+        view.RPC("excludeLayer", RpcTarget.All, layer);
     }
 
     private IEnumerator ShootLaser() {
@@ -44,7 +52,7 @@ public class LaserBeam : MonoBehaviour, AmmoType {
             // Deal damage to the hit object if it has a Hitbox component
             Hitbox hitbox = hit.collider.GetComponent<Hitbox>();
             if (hitbox != null) {
-                hitbox.takeDamage();
+                hitbox.TakeDamageRPC();
             }
         }
         // Set the end position of the line renderer
