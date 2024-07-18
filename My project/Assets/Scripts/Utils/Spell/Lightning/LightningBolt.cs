@@ -1,10 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class LightningBolt : MonoBehaviour {
-    public float duration = 0.1f;
-    public int damage = 1;
+    public float duration = 1f;
+    private GameObject damagingArea;
+    private string ammoPath;
+
+    void Awake() {
+        ammoPath = "AmmoTypes/RocketExplosiveArea";
+        damagingArea = Resources.Load<GameObject>(ammoPath);
+    }
 
     // Start is called before the first frame update
     void Start() {
@@ -12,15 +19,8 @@ public class LightningBolt : MonoBehaviour {
     }
 
     private IEnumerator Strike() {
-        RaycastHit2D hit = Physics2D.Raycast(transform.position, transform.right, 0);
-        if (hit.collider != null) {
-            // Deal damage to the hit object if it has a Hitbox component
-            Hitbox hitbox = hit.collider.GetComponent<Hitbox>();
-            if (hitbox != null) {
-                hitbox.TakeDamageRPC();
-            }
-        }
         yield return new WaitForSeconds(duration);
+        PhotonNetwork.Instantiate(ammoPath, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }
 }

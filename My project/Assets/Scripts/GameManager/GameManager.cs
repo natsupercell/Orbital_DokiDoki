@@ -14,25 +14,21 @@ public class GameManager : MonoBehaviourPunCallbacks {
     public Vector3 enemyDefaultPosition;
     public bool roundStarted;
 
+/*
     public GameObject allyPrefab;
     public GameObject enemyPrefab;
 
     public void Awake() {
-        InitializeGame();
-        Debug.Log("ok");
+
     }
+*/
     
     public void InitializeGame() {
-        Ally.reset();
-        Enemy.reset();
-
-        allyPrefab = Resources.Load<GameObject>("Players/Player");
-        enemyPrefab = Resources.Load<GameObject>("Players/PlayerClone");
+        Ally.Reset();
+        Enemy.Reset();
 
         Physics2D.IgnoreLayerCollision(8, 10, true);
         Physics2D.IgnoreLayerCollision(9, 11, true);
-
-        Orb.Initialize();
 
         allyScore = enemyScore = 0;
         scoreToWin = 3;
@@ -43,17 +39,23 @@ public class GameManager : MonoBehaviourPunCallbacks {
         // PhotonNetwork.Instantiate(allyPrefab, allyDefaultPosition, Quaternion.identity);
         // PhotonNetwork.Instantiate(enemyPrefab, enemyDefaultPosition, Quaternion.identity);
 
-        // allies.AddRange(GameObject.FindGameObjectsWithTag("Ally"));
-        // enemies.AddRange(GameObject.FindGameObjectsWithTag("Enemy"));
+        allies.AddRange(GameObject.FindGameObjectsWithTag("Ally"));
+        enemies.AddRange(GameObject.FindGameObjectsWithTag("Enemy"));
 
         roundStarted = false;
-        // StartCoroutine(startNewRound());
+        StartCoroutine(startNewRound());
     }
 
-/*
     void Update() {
+        if (Input.GetKeyDown(KeyCode.Return)) {
+            if (PhotonNetwork.IsMasterClient) {
+                InitializeGame();
+                Debug.Log("Game Starts. GL, HF!");
+            }
+        }
+
         if (roundStarted) {
-            if (Ally.isEliminated()) {
+            if (Ally.IsEliminated()) {
                 enemyScore++; Debug.Log("Enemy team win");
                 Debug.Log("Current score: " + allyScore + " " + enemyScore);
                 roundStarted = false;
@@ -62,7 +64,7 @@ public class GameManager : MonoBehaviourPunCallbacks {
                     StartCoroutine(CleanupThenStartNewRound());
                 }
             }
-            if (Enemy.isEliminated()) {
+            if (Enemy.IsEliminated()) {
                 allyScore++; Debug.Log("Ally team win");
                 Debug.Log("Current score: " + allyScore + " " + enemyScore);
                 roundStarted = false;
@@ -73,18 +75,17 @@ public class GameManager : MonoBehaviourPunCallbacks {
             }
         }
     }
-*/
 
     private IEnumerator startNewRound() {
         foreach (GameObject p in allies) {
             //Debug.Log("an ally");
             p.GetComponent<Resetter>().reset();
-            p.transform.position = allyDefaultPosition;
+            p.GetComponent<PhotonCustomControl>().MoveRPC(allyDefaultPosition);
         }
         foreach (GameObject p in enemies) {
             //Debug.Log("an enemy");
             p.GetComponent<Resetter>().reset();
-            p.transform.position = enemyDefaultPosition;
+            p.GetComponent<PhotonCustomControl>().MoveRPC(enemyDefaultPosition);
         }
 
         freezeAll();
@@ -102,21 +103,21 @@ public class GameManager : MonoBehaviourPunCallbacks {
     }
 
     private void freezeAll() {
-        foreach (GameObject p in allies) p.GetComponent<ControlAccessSwitch>().disable();
-        foreach (GameObject p in enemies) p.GetComponent<ControlAccessSwitch>().disable();
+        foreach (GameObject p in allies) p.GetComponent<ControlAccessSwitch>().DisableRPC();
+        foreach (GameObject p in enemies) p.GetComponent<ControlAccessSwitch>().DisableRPC();
         //Debug.Log("frozen");
     }
 
     private void unfreezeAll() {
-        foreach (GameObject p in allies) p.GetComponent<ControlAccessSwitch>().enabled = true;
-        foreach (GameObject p in enemies) p.GetComponent<ControlAccessSwitch>().enabled = true;
+        foreach (GameObject p in allies) p.GetComponent<ControlAccessSwitch>().EnableRPC();
+        foreach (GameObject p in enemies) p.GetComponent<ControlAccessSwitch>().EnableRPC(); 
     }
 
     private IEnumerator CleanupThenStartNewRound() {
         yield return new WaitForSeconds(3f);
         
         foreach (GameObject p in GameObject.FindGameObjectsWithTag("Orb")) {
-            Destroy(p);
+            p.GetComponent<PhotonCustomControl>().DisableRPC();
         }
 
         StartCoroutine(startNewRound());

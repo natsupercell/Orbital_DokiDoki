@@ -27,7 +27,7 @@ public class Hitbox : MonoBehaviour {
                     Invincible(invincibleTime);
                 }
                 else {
-                    team.died();
+                    team.DiedRPC();
                     gameObject.GetComponent<PhotonCustomControl>().DisableRPC();
                     // gameObject.SetActive(false);
                     Debug.Log("die");

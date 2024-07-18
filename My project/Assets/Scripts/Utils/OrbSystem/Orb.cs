@@ -10,15 +10,12 @@ public class Orb : MonoBehaviour {
     */
     public static GameObject prefab;
     public static string prefabPath;
-
-    public static void Initialize() {
-        prefabPath = "PoolingPrefabs/Orb";
-        prefab = Resources.Load<GameObject>(prefabPath);
-    }
-
+    
     public void Awake() {
         Rigidbody2D rb = GetComponent<Rigidbody2D>();
         rb.sleepMode = RigidbodySleepMode2D.NeverSleep;
+        prefabPath = "PoolingPrefabs/Orb";
+        prefab = Resources.Load<GameObject>(prefabPath);
     }
 
     public void Add(GameObject resource) {

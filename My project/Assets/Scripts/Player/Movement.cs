@@ -8,7 +8,7 @@ public class Movement : MonoBehaviour
     public float speed = 5f;
     public Rigidbody2D rb;
     public Animator animator;
-    public PhotonView view;
+    private PhotonView view;
     private ControlAccessSwitch control;
     public Direction direction = Direction.RIGHT;
     private Vector2 movement;
@@ -17,8 +17,7 @@ public class Movement : MonoBehaviour
     [SerializeField]
     public KeyCode[] moveKeys = new KeyCode[4];
 
-    void Start()
-    {
+    void Start() {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         view = GetComponent<PhotonView>();
@@ -35,7 +34,7 @@ public class Movement : MonoBehaviour
                 else if (Input.GetKeyDown(moveKeys[1])) GoRight();
                 else if (Input.GetKeyDown(moveKeys[2])) GoUp();
                 else if (Input.GetKeyDown(moveKeys[3])) GoDown();
-                if (movement == Vector2.zero
+                else if (movement == Vector2.zero
                         || (Input.GetKeyUp(moveKeys[0]) && movement == Vector2.left)
                         || (Input.GetKeyUp(moveKeys[1]) && movement == Vector2.right)
                         || (Input.GetKeyUp(moveKeys[2]) && movement == Vector2.up)

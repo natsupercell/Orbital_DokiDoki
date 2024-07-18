@@ -104,7 +104,7 @@ public class Inventory : MonoBehaviour {
                     else Debug.Log("Spell missing!");
                 }
             } 
-            if (Input.GetKeyDown(deactivateKey)) slot[currentSlot].Deactivate(transform.parent.gameObject);
+            if (Input.GetKeyDown(deactivateKey)) slot[currentSlot].Deactivate(gameObject);
         }
     }
 

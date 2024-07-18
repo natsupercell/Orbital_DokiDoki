@@ -6,7 +6,7 @@ public interface Team {
     public static int toLayerToBeIgnored(int layer) {
         return layer + 2;
     }
-    void alive();
-    void died();
+    void AliveRPC();
+    void DiedRPC();
     int toLayer();
 }

@@ -1,17 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class Lightning : Spell {
     private GameObject bolt;
+    private string ammoPath;
     public Lightning() : base("lightning") {}
 
-    private void Awake() {
-        string prefabPath = "LightningBolt";
-        bolt = Resources.Load<GameObject>(prefabPath);
+    public override void Awake() {
+        base.Awake();
+        ammoPath = "AmmoTypes/LightningBolt";
+        bolt = Resources.Load<GameObject>(ammoPath);
     }
 
     public override void castSpell(GameObject parent) {
-        Instantiate(bolt, crosshair.transform.position, Quaternion.identity);
+        PhotonNetwork.Instantiate(ammoPath, crosshair.transform.position, Quaternion.identity);
     }
 }

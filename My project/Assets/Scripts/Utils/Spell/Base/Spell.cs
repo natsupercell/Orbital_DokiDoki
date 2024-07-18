@@ -5,7 +5,7 @@ using UnityEngine;
 public class Spell : Utility {
     public GameObject spellType;  // The prefab of the spell to cast
     public GameObject crosshair;  // A visual indicator for the target location
-
+    public float delay = 0.05f;
     public Spell(string name) : base(name) {}
 
     protected enum State {
@@ -15,15 +15,12 @@ public class Spell : Utility {
 
     protected State state;
 
-    private void Awake() {
-        //crosshair = Resources.Load<GameObject>("Crosshair");
+    public virtual void Awake() {
+        state = State.None;
+        crosshair = transform.GetChild(0).gameObject;
     }
 
-    private void Start() {
-        state = State.None;
-        crosshair = Resources.Load<GameObject>("Crosshair");
-        crosshair = Instantiate(crosshair, transform.position, Quaternion.identity);
-    } 
+    private void Start() {} 
 
     protected void switchState() {
         if (state == State.None) state = State.Aiming;
@@ -31,15 +28,16 @@ public class Spell : Utility {
     }
 
     protected void aiming(GameObject parent) {
-        crosshair.transform.position = transform.position;
+        GameObject realParent = parent.transform.parent.gameObject;
+        crosshair.transform.position = realParent.transform.position;
         crosshair.SetActive(true);
-        parent.GetComponent<ControlAccessSwitch>().enabled = false;
-        parent.GetComponent<Movement>().Stop();
+        realParent.GetComponent<ControlAccessSwitch>().DisableRPC();
     }
 
     protected void notAiming(GameObject parent) {
+        GameObject realParent = parent.transform.parent.gameObject;
         crosshair.SetActive(false);
-        parent.GetComponent<ControlAccessSwitch>().enabled = true;
+        realParent.GetComponent<ControlAccessSwitch>().EnableRPC();
     }
 
     public override void Activate(GameObject parent) {
@@ -47,11 +45,18 @@ public class Spell : Utility {
             aiming(parent);
             Debug.Log("aiming");
         } else {
-            castSpell(parent);
-            notAiming(parent);
+            StartCoroutine(castSpellWithDelay(parent));
             Debug.Log("none");
         }
         switchState();
+    }
+    public IEnumerator castSpellWithDelay(GameObject parent) {
+        GameObject realParent = parent.transform.parent.gameObject;
+        crosshair.SetActive(false);
+        yield return new WaitForSeconds(delay);
+        castSpell(parent);
+        yield return new WaitForSeconds(delay);
+        realParent.GetComponent<ControlAccessSwitch>().EnableRPC();
     }
 
     public override void Deactivate(GameObject parent) {

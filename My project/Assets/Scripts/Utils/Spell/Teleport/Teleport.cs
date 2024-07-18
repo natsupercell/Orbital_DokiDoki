@@ -2,9 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Teleport : SpellWithDelay {
+public class Teleport : Spell {
     public Teleport() : base("teleport") {}
     public override void castSpell(GameObject parent) {
-        parent.transform.position = crosshair.transform.position;
+        GameObject realParent = parent.transform.parent.gameObject;
+        realParent.GetComponent<PhotonCustomControl>().MoveRPC(crosshair.transform.position);
     }
 }

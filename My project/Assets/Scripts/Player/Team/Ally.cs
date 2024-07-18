@@ -1,36 +1,52 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class Ally : MonoBehaviour, Team {
-    public static int count = 0;
-    public static int layerID = 8;
-    public bool status;
+    private static int count = 0;
+    private static int layerID = 8;
+    private bool status = false;
+    private PhotonView view;
 
-    public void Start() {
-        alive();
-        //Debug.Log("New ally");
+    public void Awake() {
+        view = GetComponent<PhotonView>();
     }
 
-    public void alive() {
+    [PunRPC]
+    private void Alive() {
         if (!status) count++;
         status = true;
     }
 
-    public void died() {
+    [PunRPC]
+    private void Died() {
         if (status) count--;
         status = false;
+    }
+
+    public static bool IsEliminated() {
+        /*
+            Debug.Log(count + " ally"); 
+            return false;
+        */
+        return count == 0;
+    }
+
+    public static void Reset() {
+        count = 0;
     }
 
     public int toLayer() {
         return layerID;
     }
 
-    public static bool isEliminated() {
-        return count == 0;
+
+    public void AliveRPC() {
+        view.RPC("Alive", RpcTarget.MasterClient);
     }
 
-    public static void reset() {
-        count = 0;
+    public void DiedRPC() {
+        view.RPC("Died", RpcTarget.MasterClient);
     }
 }
