@@ -4,7 +4,7 @@ using UnityEngine;
 using Photon.Pun;
 
 public class Hitbox : MonoBehaviour {
-    public bool shielded;
+    public bool shielded = false;
     private bool invincible;
     private bool vulnerable;
     private Team team;
@@ -27,7 +27,7 @@ public class Hitbox : MonoBehaviour {
                     Invincible(invincibleTime);
                 }
                 else {
-                    team.DiedRPC();
+                    team?.DiedRPC();
                     gameObject.GetComponent<PhotonCustomControl>().DisableRPC();
                     // gameObject.SetActive(false);
                     Debug.Log("die");

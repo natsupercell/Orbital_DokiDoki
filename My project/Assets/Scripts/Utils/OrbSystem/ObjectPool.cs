@@ -25,9 +25,6 @@ public class ObjectPool : MonoBehaviourPunCallbacks {
 
     public void Awake() {
         view = GetComponent<PhotonView>();
-        if (PhotonNetwork.IsMasterClient) {
-            LoadPrefabs();
-        }
     }
     
 

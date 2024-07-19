@@ -65,7 +65,8 @@ public class Inventory : MonoBehaviour {
         energy = 10;
 
         // For debugging
-        slot[1].util = transform.GetChild(0).gameObject;
+        slot[0].util = transform.GetChild(0).gameObject;
+        slot[1].util = transform.GetChild(1).gameObject;
     }
     
     private void Update() {

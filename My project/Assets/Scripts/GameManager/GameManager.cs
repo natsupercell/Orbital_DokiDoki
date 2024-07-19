@@ -13,15 +13,18 @@ public class GameManager : MonoBehaviourPunCallbacks {
     public Vector3 allyDefaultPosition;
     public Vector3 enemyDefaultPosition;
     public bool roundStarted;
+    private CustomTilemap map;
 
 /*
     public GameObject allyPrefab;
     public GameObject enemyPrefab;
+*/
 
     public void Awake() {
-
+        map = GameObject.FindGameObjectsWithTag("Map")[0].GetComponent<CustomTilemap>();
+        if (map != null) Debug.Log("map found!");
     }
-*/
+
     
     public void InitializeGame() {
         Ally.Reset();
@@ -77,6 +80,8 @@ public class GameManager : MonoBehaviourPunCallbacks {
     }
 
     private IEnumerator startNewRound() {
+        map.Reset();
+
         foreach (GameObject p in allies) {
             //Debug.Log("an ally");
             p.GetComponent<Resetter>().reset();
