@@ -26,6 +26,9 @@ public class GameManager : MonoBehaviourPunCallbacks {
 */
 
     public void Awake() {
+        Physics2D.IgnoreLayerCollision(8, 10, true);
+        Physics2D.IgnoreLayerCollision(9, 11, true);
+        
         timer = GetComponent<RemainingTimer>();
         view = GetComponent<PhotonView>();
         map = GameObject.FindGameObjectsWithTag("Map")[0].GetComponent<CustomTilemap>();
@@ -48,9 +51,6 @@ public class GameManager : MonoBehaviourPunCallbacks {
 
         Ally.Reset();
         Enemy.Reset();
-
-        Physics2D.IgnoreLayerCollision(8, 10, true);
-        Physics2D.IgnoreLayerCollision(9, 11, true);
 
         allyScore = enemyScore = 0;
         scoreToWin = 3;
