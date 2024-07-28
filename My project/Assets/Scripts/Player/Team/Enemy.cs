@@ -14,13 +14,13 @@ public class Enemy : MonoBehaviour, Team {
     }
 
     [PunRPC]
-    private void Alive() {
+    public void Alive() {
         if (!status) count++;
         status = true;
     }
 
     [PunRPC]
-    private void Died() {
+    public void Died() {
         if (status) count--;
         status = false;
     }

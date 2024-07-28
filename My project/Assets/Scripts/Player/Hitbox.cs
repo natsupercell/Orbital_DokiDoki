@@ -5,10 +5,10 @@ using Photon.Pun;
 
 public class Hitbox : MonoBehaviour {
     public bool shielded = false;
-    private bool invincible;
+    private bool invincible = true;
     private bool vulnerable;
     private Team team;
-    private PhotonView view;
+    protected PhotonView view;
     private float invincibleTime = 0.5f;
 
     public void Awake() {
@@ -27,13 +27,25 @@ public class Hitbox : MonoBehaviour {
                     Invincible(invincibleTime);
                 }
                 else {
+                    /*
                     team?.DiedRPC();
                     gameObject.GetComponent<PhotonCustomControl>().DisableRPC();
                     // gameObject.SetActive(false);
                     Debug.Log("die");
+                    */
+                    Die();
                 }
             }
         }
+    }
+
+    private void Die() {
+        Inventory inventory = this.transform.GetChild(0).gameObject.GetComponent<Inventory>();
+        inventory?.Drop();
+        team?.DiedRPC();
+        gameObject.GetComponent<PhotonCustomControl>().DisableRPC();
+        // gameObject.SetActive(false);
+        Debug.Log("die");
     }
 
     [PunRPC]
@@ -64,7 +76,12 @@ public class Hitbox : MonoBehaviour {
         invincible = false;
     }
 
-    public void TakeDamageRPC() {
+    [PunRPC]
+    private void DisableInvincibility() {
+        invincible = false;
+    }
+
+    public virtual void TakeDamageRPC() {
         view.RPC("TakeDamage", RpcTarget.All);
     }
 
@@ -78,6 +95,10 @@ public class Hitbox : MonoBehaviour {
 
     public void InvincibleRPC(float duration) {
         view.RPC("Invincible", RpcTarget.All, duration);
+    }
+
+    public void DisableInvincibilityRPC() {
+        view.RPC("DisableInvincibility", RpcTarget.All);
     }
 
     /*

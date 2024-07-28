@@ -36,8 +36,8 @@ public class GameManager : MonoBehaviourPunCallbacks {
         allyScore = enemyScore = 0;
         scoreToWin = 3;
 
-        allyDefaultPosition = new Vector3(-4.25f,-3.75f,10f);
-        enemyDefaultPosition = new Vector3(4.25f,3.75f,10f);
+        allyDefaultPosition = new Vector3(-4.25f,-3.75f,0f);
+        enemyDefaultPosition = new Vector3(4.25f,3.75f,0f);
 
         // PhotonNetwork.Instantiate(allyPrefab, allyDefaultPosition, Quaternion.identity);
         // PhotonNetwork.Instantiate(enemyPrefab, enemyDefaultPosition, Quaternion.identity);

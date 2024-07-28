@@ -62,7 +62,7 @@ public class Inventory : MonoBehaviour {
         view = transform.parent.GetComponent<PhotonView>();
         control = transform.parent.GetComponent<ControlAccessSwitch>();
         currentSlot = 0;
-        energy = 10;
+        energy = 200;
 
         // For debugging
         slot[0].util = transform.GetChild(0).gameObject;
@@ -144,7 +144,7 @@ public class Inventory : MonoBehaviour {
         if (IsHoldingWeapon()) slot[0].Enable();
     }
 
-    private void Drop() {
+    public void Drop() {
         slot[0].Enable();
         Orb.Create(slot[0].util, transform);
         slot[0].util = null;
