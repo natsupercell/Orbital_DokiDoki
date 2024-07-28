@@ -6,6 +6,7 @@ public class Resetter : MonoBehaviour {
     public void reset() {
         Inventory inventory = transform.GetChild(0).gameObject.GetComponent<Inventory>();
         inventory.energy += 30;
+        inventory.SwitchSlot(1);
         GetComponent<Hitbox>().DisableInvincibilityRPC();
         GetComponent<PhotonCustomControl>().EnableRPC();
         GetComponent<Team>().AliveRPC();

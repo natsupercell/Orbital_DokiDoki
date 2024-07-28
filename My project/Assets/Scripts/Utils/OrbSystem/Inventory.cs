@@ -29,11 +29,12 @@ public class Inventory : MonoBehaviour {
             util?.GetComponent<Utility>().Deactivate(obj);
         }
 
-        public void Enable() {
+        public void Enable(GameObject obj) {
             util?.GetComponent<PhotonCustomControl>().EnableRPC();
         }
 
-        public void Disable() {
+        public void Disable(GameObject obj) {
+            Deactivate(obj);
             util?.GetComponent<PhotonCustomControl>().DisableRPC();
         }
     }
@@ -73,12 +74,7 @@ public class Inventory : MonoBehaviour {
         if (view.IsMine) {  
             if (control.enabled) {
                 for (int i = 0; i < 2; i++) if (Input.GetKeyDown(slot[i].key)) {
-                    slot[currentSlot].Disable();
-                    currentSlot = i;
-                    slot[currentSlot].Enable();
-                    Debug.Log("Switched to slot number " + (i + 1) + ", holding "
-                    + (slot[i].IsEmpty() ? "nothing" 
-                    : slot[i].GetUtility().getName()));
+                    SwitchSlot(i);
                 }
                 if (Input.GetKeyDown(dropKey)) {
                     Drop();
@@ -107,6 +103,15 @@ public class Inventory : MonoBehaviour {
             } 
             if (Input.GetKeyDown(deactivateKey)) slot[currentSlot].Deactivate(gameObject);
         }
+    }
+    
+    public void SwitchSlot(int i) {
+        slot[currentSlot].Disable(gameObject);
+        currentSlot = i;
+        slot[currentSlot].Enable(gameObject);
+        Debug.Log("Switched to slot number " + (i + 1) + ", holding "
+        + (slot[i].IsEmpty() ? "nothing" 
+        : slot[i].GetUtility().getName()));
     }
 
     public void OnTriggerStay2D(Collider2D box) {
@@ -141,11 +146,11 @@ public class Inventory : MonoBehaviour {
         weapon.GetComponent<PhotonCustomControl>().SetParentRPC(gameObject, false);
         // weapon.transform.SetParent(gameObject.transform, false);
         slot[0].util = weapon;
-        if (IsHoldingWeapon()) slot[0].Enable();
+        if (IsHoldingWeapon()) slot[0].Enable(gameObject);
     }
 
     public void Drop() {
-        slot[0].Enable();
+        slot[0].Enable(gameObject);
         Orb.Create(slot[0].util, transform);
         slot[0].util = null;
     }
