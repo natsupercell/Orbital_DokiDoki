@@ -101,19 +101,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pools:
   - tag: Laser
-    size: 10
+    size: 20
   - tag: Energy
-    size: 10
+    size: 20
   - tag: Gun
-    size: 10
+    size: 20
   - tag: Orb
-    size: 10
+    size: 20
   - tag: Rocket Launcher
-    size: 10
+    size: 20
   - tag: Flame Thrower
-    size: 10
+    size: 20
   - tag: Shield
-    size: 10
+    size: 20
   view: {fileID: 0}
 --- !u!114 &-7234961138882347531
 MonoBehaviour:

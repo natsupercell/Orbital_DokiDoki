@@ -16,6 +16,7 @@ public class Spawner : MonoBehaviour {
             GameObject orbSpawner = PhotonNetwork.Instantiate("zEverythingElse/OrbSpawner", new Vector3(0, -1, 30), Quaternion.identity);
             objectPool = orbSpawner.GetComponent<ObjectPool>();
             PhotonNetwork.Instantiate("Players/Player", defaultSpawnLocation, Quaternion.identity);
+            transform.parent.GetComponent<GameManager>().orbSpawner = orbSpawner.GetComponent<OrbSpawner>();
         }
         else {
             PhotonNetwork.Instantiate("Players/PlayerClone", defaultSpawnLocation, Quaternion.identity);

@@ -14,6 +14,11 @@ public class GameManager : MonoBehaviourPunCallbacks {
     public Vector3 enemyDefaultPosition;
     public bool roundStarted;
     private CustomTilemap map;
+    public RemainingTimer timer;
+    private PhotonView view;
+    public TimerDisplay timerDisplay;
+    public ScoreDisplay scoreDisplay;
+    public OrbSpawner orbSpawner;
 
 /*
     public GameObject allyPrefab;
@@ -21,12 +26,26 @@ public class GameManager : MonoBehaviourPunCallbacks {
 */
 
     public void Awake() {
+        timer = GetComponent<RemainingTimer>();
+        view = GetComponent<PhotonView>();
         map = GameObject.FindGameObjectsWithTag("Map")[0].GetComponent<CustomTilemap>();
         if (map != null) Debug.Log("map found!");
     }
 
+    [PunRPC]
+    public void ConnectDisplayersWithManager() {
+        timerDisplay = transform.GetChild(0).gameObject.GetComponent<TimerDisplay>();
+        timerDisplay.Connect(timer);
+        scoreDisplay = transform.GetChild(0).gameObject.GetComponent<ScoreDisplay>();
+    }
+
+    public void ConnectDisplayersWithManagerRPC() {
+        view.RPC("ConnectDisplayersWithManager", RpcTarget.All);
+    }
     
     public void InitializeGame() {
+        ConnectDisplayersWithManagerRPC();
+
         Ally.Reset();
         Enemy.Reset();
 
@@ -58,6 +77,9 @@ public class GameManager : MonoBehaviourPunCallbacks {
         }
 
         if (roundStarted) {
+            if (timer.remainingTime == 30 || timer.remainingTime == 60 || timer.remainingTime == 90) {
+                orbSpawner.SpawnRandom();
+            }
             if (Ally.IsEliminated()) {
                 enemyScore++; Debug.Log("Enemy team win");
                 Debug.Log("Current score: " + allyScore + " " + enemyScore);
@@ -67,7 +89,7 @@ public class GameManager : MonoBehaviourPunCallbacks {
                     StartCoroutine(CleanupThenStartNewRound());
                 }
             }
-            if (Enemy.IsEliminated()) {
+            if (Enemy.IsEliminated() || timer.remainingTime == 0) {
                 allyScore++; Debug.Log("Ally team win");
                 Debug.Log("Current score: " + allyScore + " " + enemyScore);
                 roundStarted = false;
@@ -94,15 +116,12 @@ public class GameManager : MonoBehaviourPunCallbacks {
         }
 
         freezeAll();
-        Debug.Log(3);
-        yield return new WaitForSeconds(1f);
-        Debug.Log(2);
-        yield return new WaitForSeconds(1f);
-        Debug.Log(1);
-        yield return new WaitForSeconds(1f);
-        Debug.Log("GO!");
+        timer.SetRPC(3f);
+        yield return new WaitForSeconds(3f);
+        timer.ResetRPC();
         unfreezeAll();
 
+        yield return new WaitForSeconds(1f);
         roundStarted = true;
         //pooler.cleanup();
     }
@@ -119,6 +138,8 @@ public class GameManager : MonoBehaviourPunCallbacks {
     }
 
     private IEnumerator CleanupThenStartNewRound() {
+        scoreDisplay.UpdateScoreRPC(allyScore, enemyScore);
+        timer.SetRPC(3f);
         yield return new WaitForSeconds(3f);
         
         foreach (GameObject p in GameObject.FindGameObjectsWithTag("Orb")) {
@@ -129,6 +150,7 @@ public class GameManager : MonoBehaviourPunCallbacks {
     }
 
     private IEnumerator GameOver() {
+        timer.Set(3f);
         // TODO: Message indicating winning team should appear on screen
         Debug.Log("Game over");
         yield return new WaitForSeconds(1f);

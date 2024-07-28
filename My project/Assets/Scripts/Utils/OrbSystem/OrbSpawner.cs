@@ -7,6 +7,8 @@ public class OrbSpawner : MonoBehaviourPunCallbacks {
     public KeyCode[] key;
     public ObjectPool pooler;
     public PhotonView view;
+    private string[] listOfItems = {"Shield", "Gun", "Laser", "Rocket Launcher", "Flame Thrower", "Energy"};
+    private System.Random rnd = new();
 
     public void Awake() {
         this.pooler = GetComponent<ObjectPool>();
@@ -52,5 +54,10 @@ public class OrbSpawner : MonoBehaviourPunCallbacks {
         if (Input.GetKeyDown(key[5])) {
             SpawnOrb("Energy");
         }
+    }
+
+    public void SpawnRandom() {
+        int id = rnd.Next(listOfItems.Length);
+        SpawnOrb(listOfItems[id]);
     }
 }

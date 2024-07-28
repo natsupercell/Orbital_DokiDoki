@@ -100,7 +100,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   duration: 0.1
-  damage: 10
 --- !u!114 &-6091714694913357763
 MonoBehaviour:
   m_ObjectHideFlags: 0
