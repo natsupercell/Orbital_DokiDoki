@@ -41,6 +41,11 @@ public class PhotonCustomControl : MonoBehaviourPun {
         }
     }
 
+    [PunRPC]
+    public void SetAsFirstSibling() {
+        transform.SetAsFirstSibling();
+    }
+
     public void EnableRPC() {
         photonView.RPC("Enable", RpcTarget.All);
     }
@@ -65,5 +70,9 @@ public class PhotonCustomControl : MonoBehaviourPun {
 
     public void SetParentRPC(GameObject parent) {
         SetParentRPC(parent, true);
+    }
+
+    public void SetAsFirstSiblingRPC() {
+        photonView.RPC("SetAsFirstSibling", RpcTarget.All);
     }
 }

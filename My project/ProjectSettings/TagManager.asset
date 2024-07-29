@@ -10,6 +10,7 @@ TagManager:
   - Orb
   - Audio
   - Map
+  - Data
   layers:
   - Default
   - TransparentFX

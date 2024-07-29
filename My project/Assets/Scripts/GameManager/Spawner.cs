@@ -8,20 +8,36 @@ public class Spawner : MonoBehaviour {
     private ObjectPool objectPool;
 
     public void Awake() {
-        //playerPrefab = Resources.Load<GameObject>("Player");
+        
     }
 
     public void Start() {
+        PlayerData playerData = GameObject.FindGameObjectsWithTag("Data")[0].GetComponent<PlayerData>();
+        if (playerData.side == 1) {
+            if (playerData.player == 1) {
+                PhotonNetwork.Instantiate("Players/Player", defaultSpawnLocation, Quaternion.identity);
+            } 
+            else if (playerData.player == 2) {
+                PhotonNetwork.Instantiate("Players/PlayerCloneOppo", defaultSpawnLocation, Quaternion.identity);
+            }
+        }
+        else if (playerData.side == 2) {
+            if (playerData.player == 1) {
+                PhotonNetwork.Instantiate("Players/PlayerOppo", defaultSpawnLocation, Quaternion.identity);
+            } 
+            else if (playerData.player == 2) {
+                PhotonNetwork.Instantiate("Players/PlayerClone", defaultSpawnLocation, Quaternion.identity);
+            }
+        }
         if (PhotonNetwork.IsMasterClient) {
             GameObject orbSpawner = PhotonNetwork.Instantiate("zEverythingElse/OrbSpawner", new Vector3(0, -1, 30), Quaternion.identity);
             objectPool = orbSpawner.GetComponent<ObjectPool>();
-            PhotonNetwork.Instantiate("Players/Player", defaultSpawnLocation, Quaternion.identity);
             transform.parent.GetComponent<GameManager>().orbSpawner = orbSpawner.GetComponent<OrbSpawner>();
         }
         else {
-            PhotonNetwork.Instantiate("Players/PlayerClone", defaultSpawnLocation, Quaternion.identity);
             Destroy(gameObject);
         }
+        Destroy(playerData.gameObject);
     }
     
     public void Update() {

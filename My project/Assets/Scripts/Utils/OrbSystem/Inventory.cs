@@ -17,6 +17,10 @@ public class Inventory : MonoBehaviour {
             return util.GetComponent<Utility>();
         }
 
+        public void SetUtility(GameObject util) {
+            this.util = util;
+        }
+
         public bool IsEmpty() {
             return util == null;
         }
@@ -53,14 +57,16 @@ public class Inventory : MonoBehaviour {
     public KeyCode deactivateKey;
     public KeyCode pickUpKey;
     public KeyCode dropKey;
-    public PhotonView view;
+    private PhotonView view;
+    private PhotonView inventoryView;
     private ControlAccessSwitch control;
 
     private bool pickingUp;
     private bool pickUpAble = true;
     public static float delay = 0.1f;
     void Awake() {
-        view = transform.parent.GetComponent<PhotonView>();
+        /* Players's view */ view = transform.parent.GetComponent<PhotonView>();
+        inventoryView = GetComponent<PhotonView>();
         control = transform.parent.GetComponent<ControlAccessSwitch>();
         currentSlot = 0;
         energy = 200;
@@ -144,15 +150,33 @@ public class Inventory : MonoBehaviour {
 
     private void PickUp(GameObject weapon) {
         weapon.GetComponent<PhotonCustomControl>().SetParentRPC(gameObject, false);
-        // weapon.transform.SetParent(gameObject.transform, false);
-        slot[0].util = weapon;
+        weapon.GetComponent<PhotonCustomControl>().SetAsFirstSiblingRPC();
+        SetWeaponToFirstChildRPC();
         if (IsHoldingWeapon()) slot[0].Enable(gameObject);
     }
 
     public void Drop() {
         slot[0].Enable(gameObject);
         Orb.Create(slot[0].util, transform);
-        slot[0].util = null;
+        SetWeaponToNullRPC();
+    }
+
+    [PunRPC]
+    public void SetWeaponToFirstChild() {
+        slot[0].SetUtility(transform.GetChild(0).gameObject);
+    }
+
+    public void SetWeaponToFirstChildRPC() {
+        inventoryView.RPC("SetWeaponToFirstChild", RpcTarget.All);
+    }
+
+    [PunRPC]
+    public void SetWeaponToNull() {
+        slot[0].SetUtility(null);
+    }
+
+    public void SetWeaponToNullRPC() {
+        inventoryView.RPC("SetWeaponToNull", RpcTarget.All);
     }
 
     private bool IsHoldingWeapon() {
@@ -188,5 +212,9 @@ public class Inventory : MonoBehaviour {
             return false;
         }
         energy -= cost; return true;
+    }
+    
+    public void Reset() {
+        slot[currentSlot].Disable(gameObject);
     }
 }

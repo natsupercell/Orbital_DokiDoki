@@ -20,6 +20,9 @@ public class GameManager : MonoBehaviourPunCallbacks {
     public ScoreDisplay scoreDisplay;
     public OrbSpawner orbSpawner;
 
+    private bool orbSpawned1;
+    private bool orbSpawned2;
+    private bool orbSpawned3;
 /*
     public GameObject allyPrefab;
     public GameObject enemyPrefab;
@@ -53,7 +56,7 @@ public class GameManager : MonoBehaviourPunCallbacks {
         Enemy.Reset();
 
         allyScore = enemyScore = 0;
-        scoreToWin = 3;
+        scoreToWin = 7;
 
         allyDefaultPosition = new Vector3(-4.25f,-3.75f,0f);
         enemyDefaultPosition = new Vector3(4.25f,3.75f,0f);
@@ -77,8 +80,17 @@ public class GameManager : MonoBehaviourPunCallbacks {
         }
 
         if (roundStarted) {
-            if (timer.remainingTime == 30 || timer.remainingTime == 60 || timer.remainingTime == 90) {
+            if (timer.remainingTime < 90 && !orbSpawned1) {
                 orbSpawner.SpawnRandom();
+                orbSpawned1 = true;
+            }
+            if (timer.remainingTime < 60 && !orbSpawned2) {
+                orbSpawner.SpawnRandom();
+                orbSpawned2 = true;
+            }
+            if (timer.remainingTime < 30 && !orbSpawned3) {
+                orbSpawner.SpawnRandom();
+                orbSpawned3 = true;
             }
             if (Ally.IsEliminated()) {
                 enemyScore++; Debug.Log("Enemy team win");
@@ -138,6 +150,7 @@ public class GameManager : MonoBehaviourPunCallbacks {
     }
 
     private IEnumerator CleanupThenStartNewRound() {
+        orbSpawned1 = orbSpawned2 = orbSpawned3 = false;
         scoreDisplay.UpdateScoreRPC(allyScore, enemyScore);
         timer.SetRPC(3f);
         yield return new WaitForSeconds(3f);
@@ -150,12 +163,14 @@ public class GameManager : MonoBehaviourPunCallbacks {
     }
 
     private IEnumerator GameOver() {
+        scoreDisplay.UpdateScoreRPC(allyScore, enemyScore);
         timer.Set(3f);
         // TODO: Message indicating winning team should appear on screen
         Debug.Log("Game over");
         yield return new WaitForSeconds(1f);
         Debug.Log("Redirecting to the main menu...");
         yield return new WaitForSeconds(2f);
+        PhotonNetwork.Disconnect();
         SceneManager.LoadScene("MainMenu");
     }
 }

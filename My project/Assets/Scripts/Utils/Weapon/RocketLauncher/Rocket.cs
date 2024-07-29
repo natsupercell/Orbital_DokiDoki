@@ -11,6 +11,7 @@ public class Rocket : MonoBehaviour, AmmoType {
     private AudioManager audioManager;
     private new AudioClip audio;
     private PhotonView view;
+    private bool lethal = true;
 
     void Awake() {
         rb = GetComponent<Rigidbody2D>();
@@ -47,12 +48,15 @@ public class Rocket : MonoBehaviour, AmmoType {
 
     // Update is called once per frame
     void OnTriggerEnter2D(Collider2D hitInfo) {
-        // Implement logic for when the rocket hits something
-        Debug.Log("hit");
-        audioManager.PlaySFX(audio);
-        //StartCoroutine(Explode());
-        PhotonNetwork.Instantiate(ammoPath, transform.position, Quaternion.identity);
-        Destroy(gameObject);
+        if (lethal) {
+            // Implement logic for when the rocket hits something
+            Debug.Log("hit");
+            audioManager.PlaySFX(audio);
+            //StartCoroutine(Explode());
+            PhotonNetwork.Instantiate(ammoPath, transform.position, Quaternion.identity);
+            lethal = false;
+            Destroy(gameObject);
+        }
     }
 
     /*

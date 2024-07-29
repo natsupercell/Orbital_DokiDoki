@@ -7,6 +7,7 @@ public class Bullet : MonoBehaviour, AmmoType {
     public float speed = 20f;
     private Rigidbody2D rb;
     private PhotonView view;
+    private bool lethal = true;
 
     void Awake() {
         rb = GetComponent<Rigidbody2D>();
@@ -36,11 +37,14 @@ public class Bullet : MonoBehaviour, AmmoType {
 
     // Update is called once per frame
     void OnTriggerEnter2D(Collider2D hitInfo) {
-        // Implement logic for when the bullet hits something
-        Hitbox hitbox = hitInfo.GetComponent<Hitbox>();
-        if (hitbox != null) {
-            hitbox.TakeDamageRPC();
+        if (lethal) {
+            // Implement logic for when the bullet hits something
+            Hitbox hitbox = hitInfo.GetComponent<Hitbox>();
+            if (hitbox != null) {
+                hitbox.TakeDamageRPC();
+            }
+            lethal = false;
+            Destroy(gameObject);
         }
-        Destroy(gameObject);
     }
 }

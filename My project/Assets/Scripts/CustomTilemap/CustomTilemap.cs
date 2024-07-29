@@ -14,7 +14,8 @@ public class CustomTilemap : MonoBehaviour {
         tilemap = GetComponent<Tilemap>();
         // tilePath = "DestructibleTiles/Ice";
         destructibleTilePrefab = Resources.Load<GameObject>(tilePath);
-        Initialize();
+        if (PhotonNetwork.IsMasterClient) Initialize();
+        CleanUp();
     }
 
     // Credit to ChatGPT
@@ -31,7 +32,9 @@ public class CustomTilemap : MonoBehaviour {
                 tileSet.Add(newTile);
             }
         }
+    }
 
+    void CleanUp() {
         // Optionally, clear the original tilemap to avoid rendering overlap
         tilemap.ClearAllTiles();
     }
